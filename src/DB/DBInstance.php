@@ -22,7 +22,7 @@ trait DBInstance
         if (empty(static::$genericInstance)) {
             static::$genericInstance = PdoDatabase::fromDsn(
                 new PdoDsn(
-                    'mysql:dbname=' . DATABASE_DEFAULT . ';host=' . DATABASE_CREDENTIALS['hostname'],
+                    'mysql:dbname=' . DATABASE_DEFAULT . ';host=' . DATABASE_CREDENTIALS['hostname'] . ';port=' . DATABASE_CREDENTIALS['port'],
                     DATABASE_CREDENTIALS['username'],
                     DATABASE_CREDENTIALS['password']
                 )
@@ -41,7 +41,7 @@ trait DBInstance
         if (empty(static::$instance)) {
             static::$instance = PdoDatabase::fromDsn(
                 new PdoDsn(
-                    'mysql:dbname=' . $_SESSION['db_name'] . ';host=' . DATABASE_CREDENTIALS['hostname'],
+                    'mysql:dbname=' . $_SESSION['db_name'] . ';host=' . DATABASE_CREDENTIALS['hostname'] . ';port=' . DATABASE_CREDENTIALS['port'],
                     DATABASE_CREDENTIALS['username'],
                     DATABASE_CREDENTIALS['password']
                 )
