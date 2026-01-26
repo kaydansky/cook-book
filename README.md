@@ -1,6 +1,6 @@
 # Cook Book
 
-A web-based application for managing and exploring recipes, ingredients, dishes, equipment, and more. Built with PHP, this app provides a comprehensive platform for culinary enthusiasts to organize, search, and discover a wide variety of cooking resources.
+A web-based application for managing and exploring recipes, ingredients, dishes, equipment, and more. Built with PHP, this app provides a comprehensive platform for culinary enthusiasts and professionals to organize, search, and discover a wide variety of cooking resources.
 
 ## Features
 
@@ -54,7 +54,7 @@ A web-based application for managing and exploring recipes, ingredients, dishes,
    ```
 3. **Configure the application**
    - Copy `config/config.php.example` to `config/config.php` and update database credentials and other settings.
-   - Import the SQL schema from `config/cookbook.sql` into your database.
+   - Import the SQL schema from `config/cookbook_2026-01-26_231906.sql` and `config/cookbook1_2026-01-26_231957` into your database.
 4. **Set up the web server**
    - Point your web server's document root to the `public/` directory.
 5. **Access the app**
