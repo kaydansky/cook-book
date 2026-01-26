@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-md-auto pr-0 mr-0">
+        <h2>
+            <small>Dish</small>
+        </h2>
+    </div>
+    <div class="col-md-11 mb-3">
+        <h2>{DISH_TITLE}<br>
+            <small><em>{DISH_SUBTITLE}</em></small>
+        </h2>
+    </div>
+</div>
+
+<div class="row">
+    {CAROUSEL}
+    {DESCRIPTION}
+</div>
+
+<div class="row">
+    <div class="col">
+        <form method="get" class="form-inline mt-4" target="_blank">
+            <div class="btn-group dropdown keep-open" id="printDropdown">
+                <button type="submit" name="print" value="on" class="btn btn-secondary">Print</button>
+                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Options</span>
+                </button>
+                <div class="dropdown-menu keep-open bg-light">
+                    <div class="custom-control custom-checkbox ml-2 text-nowrap pr-2">
+                        <input id="presentationImg" name="presentation_img" type="checkbox" class="custom-control-input" value="on">
+                        <label class="custom-control-label justify-content-start" for="presentationImg">Print Presentation Images</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="dish-body">
+    <div class="card my-4">
+        <div class="card-body">
+            <div class="row">
+                {DISH_DATE}
+                {DATE_ADDED}
+                {DATE_MODIFIED}
+                {DATE_SERVED}
+            </div>
+            <div class="row">
+                {FOH_KITCHEN_ASSEMBLY}
+                {FOH_DINING_ASSEMBLY}
+                {FOH_PURVEYORS}
+            </div>
+            <div class="row">
+                {THIS_MARKING}
+                {THIS_WINE_PAIRING}
+                {CHINA}
+            </div>
+            <div class="row">
+                {NOTES}
+                {SOURCE}
+                {AUTHOR}
+            </div>
+            <div class="row">
+                {DIETARY_RESTRICTIONS}
+                {CATEGORIES}
+                {APPROVED}
+            </div>
+        </div>
+    </div>
+
+    {LIST_ALTERNATIVES}
+    {LIST_RECIPES}
+</div>
+
+<a href="javascript:history.back()"><button class="btn btn-secondary mr-2 mb-5" type="button">Go Back</button></a>

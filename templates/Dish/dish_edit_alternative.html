@@ -1,0 +1,33 @@
+<div class="entry-date form-row">
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label>Date</label>
+            <input name="date[]" value="{DATE}" type="date" class="form-control">
+        </div>
+        <div class="form-group col-md-5">
+            <label>Alternative Title</label>
+            <input name="alternative_title[]" value="{alternative_title}" type="text" class="form-control">
+        </div>
+        <div class="form-group col-md-4">
+            <label>Alternative Subitle</label>
+            <input name="alternative_subtitle[]" value="{alternative_subtitle}" type="text" class="form-control">
+        </div>
+        <div class="form-group col-md-4">
+            <label>Marking</label>
+            <textarea name="marking[]" class="form-control" rows="3">{marking}</textarea>
+        </div>
+        <div class="form-group col-md-4">
+            <label>Wine Pairing</label>
+            <textarea name="wine_pairing[]" class="form-control" rows="3">{wine_pairing}</textarea>
+        </div>
+        <div class="form-group col-md-4">
+            <label>China</label>
+            <input type="text" value="{china_name}" class="ac-china form-control" placeholder="Start typing to find items">
+            <input name="china_id[]" value="{china_id}" type="hidden" class="china_hidden">
+            <button class="delete-date btn btn-secondary pull-right mt-3" type="button"><span class="fa fa-minus"></span> </button>
+        </div>
+    </div>
+    <div class="form-row w-100">
+        <hr class="w-100 bg-primary">
+    </div>
+</div>

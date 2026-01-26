@@ -1,0 +1,88 @@
+<div class="modal fade" id="img-enlarge" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Step Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="rounded" src="" id="imagepreview">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{CONTENT}
+
+<script>
+    $(function () {
+        $("#srcInput").autocomplete({
+            source: "/dish/src/",
+            minLength: 2,
+            select: function (event, ui) {
+                window.location.assign("/dish/" + ui.item.id);
+            }
+        });
+
+        $('[data-toggle="popover"]').popover({
+            trigger: 'hover',
+            placement: 'auto'
+        });
+    });
+
+    $("#srcInput").focus(function () {
+        $(this).val('');
+    });
+
+    $('#img-enlarge').on('show.bs.modal', function (e) {
+        let data = $(e.relatedTarget).data();
+
+        $('#imagepreview').attr('src', data.imgId);
+
+        $(this).find('.modal-content').css({
+            width: 'auto'
+        });
+
+        $(this).find('.modal-lg').css({
+            'max-width': '920px'
+        });
+    });
+
+    $('.dietary').on('click', function () {
+        var cls = 'mark font-weight-bold';
+        var a = $(this).attr('recipes').split(',');
+        var control = $(this);
+
+        $('.dietary').not(this).each(function () {
+            $(this).removeClass(cls);
+        });
+
+        $('.ingredientTable').find('a').each(function () {
+            $(this).removeClass(cls);
+        });
+
+        control.hasClass(cls) ? control.removeClass(cls) : control.addClass(cls);
+
+        $.each(a, function (index, value) {
+            var selector = $('#' + value);
+            control.hasClass(cls) ? selector.addClass(cls) : selector.removeClass(cls);
+        });
+
+        return false;
+    });
+
+    $('.highlight-steps').on('click', function () {
+        $(this).hasClass('highlighted') ? $(this).removeClass('highlighted') : $(this).addClass('highlighted');
+    });
+
+    $('#printDropdown .dropdown-menu').on({
+        "click":function(e){
+            e.stopPropagation();
+        }
+    });
+</script>

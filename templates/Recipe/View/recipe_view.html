@@ -1,0 +1,177 @@
+<div class="row">
+    <div class="col-md-12 my-3"><h2><small>Recipe</small> {RECIPE_TITLE}</h2></div>
+</div>
+
+<div class="row">
+    {CAROUSEL}
+    {DESCRIPTION}
+</div>
+
+<div class="row">
+    <div class="col">
+        <form method="get" class="form-inline mt-4" target="_blank">
+            <div class="btn-group dropdown keep-open" id="printDropdown">
+                <button type="submit" name="print" value="on" class="btn btn-secondary">Print</button>
+                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Options</span>
+                </button>
+                <div class="dropdown-menu keep-open bg-light">
+                    <div class="custom-control custom-checkbox ml-2 text-nowrap pr-2">
+                        <input id="presentationImg" name="presentation_img" type="checkbox" class="custom-control-input" value="on">
+                        <label class="custom-control-label justify-content-start" for="presentationImg">Print Presentation Images</label>
+                    </div>
+                    <div class="custom-control custom-checkbox ml-2 text-nowrap pr-2">
+                        <input id="stepImg" name="step_img" type="checkbox" class="custom-control-input" value="on">
+                        <label class="custom-control-label justify-content-start" for="stepImg">Print Step Images</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="recipe-body">
+    <div class="card my-4">
+        <div class="card-body">
+            <div class="row">
+                {TIME}
+                {SOURCE}
+            </div>
+            <div class="row">
+                {AUTHOR}
+                {APPROVED}
+            </div>
+            <div class="row">
+                {DATE_ADDED}
+                {DATE_MODIFIED}
+            </div>
+            <div class="row">
+                {NOTES}
+                {CATEGORIES}
+            </div>
+            <div class="row">
+                {RESTRICTIONS}
+                {YIELD}
+            </div>
+            <div class="row">
+                <div class="col-sm-12"><hr></div>
+            </div>
+            <div class="row">
+                <div class="col-sm mb-4">
+                    <div class="card d-inline-block">
+                        <div class="card-body bg-light p-1">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <table class="table table-sm  table-responsive table-borderless mb-0">
+                                        <tbody>
+                                        <tr>
+                                            <td class="align-middle">
+                                                Scale:
+                                            </td>
+                                            <td class="align-middle">
+                                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                    <label class="scale-label btn btn-secondary">
+                                                        <input type="radio" name="scale" value="0.5" autocomplete="off">x&nbsp;0.5
+                                                    </label>
+                                                    <label class="scale-label btn btn-secondary active" id="scaleDefault">
+                                                        <input type="radio" name="scale" value="1" autocomplete="off" checked>x&nbsp;1
+                                                    </label>
+                                                    <label class="scale-label btn btn-secondary">
+                                                        <input type="radio" name="scale" value="2" autocomplete="off">x&nbsp;2
+                                                    </label>
+                                                    <label class="scale-label btn btn-secondary">
+                                                        <input type="radio" name="scale" value="4" autocomplete="off">x&nbsp;4
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-sm">
+                                    <table class="table table-sm table-responsive table-borderless mb-0">
+                                        <tr>
+                                            <td class="align-middle">
+                                                <div class="input-group" style="min-width: 140px;">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">Custom</div>
+                                                    </div>
+                                                    <input type="number" step="1" id="scale-custom" class="form-control mr-sm-2" style="width:48px;" oninput="this.style.width = ((this.value.length + 6) * 10) + 'px';">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm mb-4">
+                    <div class="card d-inline-block">
+                        <div class="card-body bg-light p-1">
+                            <table class="table table-sm  table-responsive table-borderless mb-0">
+                                <tbody>
+                                <tr>
+                                    <td class="align-middle">
+                                        Units:
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            <label id="Metric" class="converter-label btn btn-secondary active">
+                                                <input type="radio" name="unit_converter" value="Metric" autocomplete="off" checked>Metric
+                                            </label>
+                                            <label class="converter-label btn btn-secondary">
+                                                <input type="radio" name="unit_converter" value="US Imperial" autocomplete="off">Imperial
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Ingredients | <small><span class="text-primary">Blue</span>
+                        = Ingredient,
+                        <span class="text-success">Green</span>
+                        = Recipe</small></h4>
+                </div>
+                <div class="card-body mb-0">
+                    <table class="table table-sm table-responsive">
+                        <tbody id="ingredientTable">
+                        {LIST_INGREDIENTS}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {LIST_EQUIPMENT}
+        </div>
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Instructions</h4>
+                </div>
+                <div class="card-body mb-0">
+                    <ul class="list-group list-group-flush mb-1">
+                        {LIST_STEPS}
+                    </ul>
+                    <div class="row" id="stepImagesContainer">
+                        {STEPS_IMAGES}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="javascript:history.back()"><button class="btn btn-secondary mr-2 mb-5" type="button">Go Back</button></a>
+{BUTTON_EDIT}

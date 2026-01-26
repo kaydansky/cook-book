@@ -1,0 +1,178 @@
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You are about to delete ingredient <b><i class="title"></i></b>.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger btn-ok">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="my-3">{PAGE_TITLE}</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-8">
+        {CONTENT}
+    </div>
+
+    <div class="col-4">
+        <div class="card mb-4">
+            <h5 class="card-header">Create Ingredient</h5>
+            <div class="card-body">
+                <form id="CreateIngredientForm" action="/ingredient/manage/" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input name="new_ingredient" id="Ingredient" class="form-control" type="text" placeholder="Ingredient Name">
+                    </div>
+                    <div class="controlsnew-dr form-group">
+                        <label>Dietary Restrictions</label>
+                        <div>
+                            <div class="entrynew-dr input-group mb-3">
+                                <select name="new_dietary_restriction_id[]" class="form-control">
+                                    <option value=""></option>
+                                    {RESTRICTION_OPTIONS}
+                                </select>
+                                <div class="input-group-append">
+                                    <span class="addnew-dr plus-cursor input-group-text"><span class="fa fa-plus"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input name="new_alt_search_terms" id="AltNames" class="form-control" type="text" placeholder="Alternate Names">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="new_description" placeholder="Description" class="form-control" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="IngredientImage">Image</label>
+                        <input name="new_ingredient_image" type="file" class="form-control-file" style="border: none;" id="IngredientImage">
+                    </div>
+                    <br>
+                    <button class="btn btn-primary" type="submit">Create Ingredient</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    {NOTIFICATION}
+    
+    $(document).ready(function() {
+        $(document).on('click', '.add-dr', function () {
+            var controlDiv = $('.controls-dr div:first'),
+                currentEntry = $(this).parents('.entry-dr:first'),
+                newEntry = $(currentEntry.clone()).appendTo(controlDiv);
+
+            newEntry.find('select').val('');
+            controlDiv.find('.entry-dr:not(:last) .add-dr')
+                .removeClass('add-dr').addClass('delete-dr')
+                .html('<span class="fa fa-minus"></span>');
+        }).on('click', '.delete-dr', function () {
+            $(this).parents('.entry-dr:first').remove();
+            return false;
+        });
+
+        $(document).on('click', '.addnew-dr', function () {
+            var controlDiv = $('.controlsnew-dr div:first'),
+                currentEntry = $(this).parents('.entrynew-dr:first'),
+                newEntry = $(currentEntry.clone()).appendTo(controlDiv);
+
+            newEntry.find('select').val('');
+            controlDiv.find('.entrynew-dr:not(:last) .addnew-dr')
+                .removeClass('addnew-dr').addClass('deletenew-dr')
+                .html('<span class="fa fa-minus"></span>');
+        }).on('click', '.deletenew-dr', function () {
+            $(this).parents('.entrynew-dr:first').remove();
+            return false;
+        });
+        
+        $('#dataTable').DataTable({
+            order: [[2, 'desc']],
+            ajax: "/ingredient/manage/list/",
+            stateSave: true,
+            columnDefs: [
+            {
+                targets: 4,
+                searchable: false,
+                orderable: false,
+                render: function (data, type, full, meta) {
+                    return "<div class='text-wrap width-100'>" + data + "</div>";
+                }
+            },
+            {
+                targets: 1,
+                render: function (data, type, full, meta) {
+                    return "<div class='text-wrap width-100'>" + data + "</div>";
+                }
+            },
+            {
+                targets: 2,
+                searchable: false,
+                render: function (data, type, full, meta) {
+                    return "<div class='text-nowrap'>" + data + "</div>";
+                }
+            }],
+            drawCallback: function() {
+                $('.check-approve').on('click', function() {
+                    if ($(this).is(':checked')) {
+                        $.post('/ingredient/manage/', { approve_ingredient_id: $(this).val() } );
+                    } else {
+                        $.post('/ingredient/manage/', { disapprove_ingredient_id: $(this).val() } );
+                    }
+                });
+
+                $(function () {
+                    $('[data-toggle="popover"]').popover({
+                        trigger: 'hover',
+                        placement: 'left'
+                    });
+                });
+            }
+        });
+        
+        $('#confirm-delete').on('show.bs.modal', function(e) {
+            var data = $(e.relatedTarget).data();
+            $('.title', this).text(data.recordTitle);
+            $('.btn-ok', this).data('recordId', data.recordId);
+        });
+
+        $('#confirm-delete').on('click', '.btn-ok', function (e) {
+            var $modalDiv = $(e.delegateTarget);
+            var id = $(this).data('recordId');
+
+            $.post( "/ingredient/manage/", {delete_ingredient_id: id}).done(function() {
+                $modalDiv.modal('hide');
+                location.reload();
+            });
+        });
+    });
+
+    $("#CreateIngredientForm").validate({
+        rules: {
+            new_ingredient: {
+                required: true
+            }
+        },
+        messages: {
+            new_ingredient: {
+                required: "Please provide Ingredient Name"
+            }
+        }
+    });
+</script>

@@ -1,0 +1,39 @@
+<div class="card card-login mx-auto mt-5">
+    <div class="card-header">Sign In</div>
+    <div class="card-body">
+        <form id="LoginForm" action="/login/" method="post">
+            <div class="form-group" style="padding-bottom: 15px;">
+                <input name="email" required class="form-control" type="email" aria-describedby="emailHelp" placeholder="Email Address">
+            </div>
+            <div class="form-group" style="padding-bottom: 15px;">
+                <input name="password" required class="form-control" type="password" placeholder="Password">
+            </div>
+            <div class="form-group" style="padding-bottom: 15px;">
+                <div class="custom-control custom-checkbox mr-sm-2">
+                    <input name="remember" type="checkbox" class="custom-control-input" value="on" id="remember">
+                    <label class="custom-control-label" for="remember">Remember Me</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+        <div class="text-center">
+            <a class="d-block small mt-3" href="/forgotpw/">Forgot Password?</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    {NOTIFICATION}
+
+    $("#LoginForm").validate({
+        rules: {
+            email: {
+                required: true,
+                email: true
+            }
+        },
+        messages: {
+            email: "Please enter a valid email address"
+        }
+    });
+</script>

@@ -1,0 +1,32 @@
+<img class="img-fluid rounded" src="{IMAGE_FILENAME}" alt="Equipment Image">
+<hr>
+<form id="UpdateEquipmentForm" action="/equipment/manage/" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="update_equipment_id" value="{EQUIPMENT_ID}">
+    <div class="form-group">
+        <div class="custom-control custom-checkbox mr-sm-2">
+            <input name="remove_image" type="checkbox" class="custom-control-input" value="on" id="removeImage">
+            <label class="custom-control-label" for="removeImage">Remove Image</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="EquipmentImage">Change Image</label>
+        <input name="update_equipment_image" type="file" class="form-control-file" style="border: none;" id="EquipmentImage">
+    </div>
+    <div class="form-group">
+        <label for="Equipment">Equipment Name</label>
+        <input name="update_equipment" value="{EQUIPMENT}" id="Equipment" class="form-control" type="text">
+    </div>
+    <div class="form-group">
+        <label for="Manufacturer">Manufacturer</label>
+        <input name="update_manufacturer" value="{MANUFACTURER}" id="Manufacturer" class="form-control" type="text">
+    </div>
+    <div class="form-group">
+        <label for="Description">Descritpion</label>
+        <textarea name="update_description" class="form-control" rows="4">{DESCRIPTION}</textarea>
+    </div>
+    <br>
+    <a href="javascript:history.back()"><button class="btn btn-secondary" type="button">Cancel</button></a>
+    <button class="btn btn-primary" type="submit">Update Equipment</button>
+    <a href="/equipment/manage/"><button class="btn btn-secondary pull-right" type="button">Back to List</button></a>
+</form>
+<br><br>

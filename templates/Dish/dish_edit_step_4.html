@@ -1,0 +1,66 @@
+<form action="/dish/manage/edit/{DISH_ID}" method="post" id="createDishForm" enctype="multipart/form-data">
+    <input type="hidden" name="image_filenames" value="{IMAGE_FILENAMES}">
+    <input type="hidden" name="wizard_step" value="4">
+    <input type="hidden" name="dish_title" value="{DISH_TITLE}">
+    <input type="hidden" name="dish_subtitle" value="{DISH_SUBTITLE}">
+    <input type="hidden" name="description" value="{DESCRIPTION}">
+    <input type="hidden" name="source" value="{SOURCE}">
+    <input type="hidden" name="source_link" value="{SOURCE_LINK}">
+    <input type="hidden" name="foh_kitchen_assembly" value="{FOH_KITCHEN_ASSEMBLY}">
+    <input type="hidden" name="foh_dining_assembly" value="{FOH_DINING_ASSEMBLY}">
+    <input type="hidden" name="foh_purveyors" value="{FOH_PURVEYORS}">
+    <input type="hidden" name="notes" value="{NOTES}">
+    <input name="this_china_id" value="{THIS_CHINA_ID}" type="hidden" class="china_hidden">
+    <input type="hidden" name="this_marking" value="{THIS_MARKING}">
+    <input type="hidden" name="this_wine_pairing" value="{THIS_WINE_PAIRING}">
+    <input type="hidden" name="dish_date" value="{DISH_DATE}">
+
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">
+            <h5>Instructions Assembly |
+                <small>Click <span class="fa fa-plus"></span> on the right to add another step. Click <span
+                        class="fa fa-minus"></span> to remove. Drag and drop to sort.
+                </small>
+            </h5>
+        </div>
+        <div class="card-body bg-light pb-0">
+            <div class="form-row ml-2">
+                <div class="form-group col-md-7 mb-0">
+                    <label>Step Description</label>
+                </div>
+                <div class="form-group col-md-4 mb-0">
+                    <label>Step Image</label>
+                </div>
+                <div class="form-group col-md-1 mb-0"></div>
+            </div>
+        </div>
+        <div class="card-body bg-light pt-0">
+            <ol class="sortable controls-step">
+                {STEPS}
+                <li class="entry-step">
+                    <div class="form-row border rounded bg-white pt-3 mb-4 shadow">
+                        <div class="form-group col-md-7">
+                            <textarea name="step_content[]" rows="3" class="step_content form-control"></textarea>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input name="step_image[]" type="file" class="form-control-file" style="border: none;"
+                                   accept="image/*">
+                        </div>
+                        <div class="form-group col-md-1 align-self-center">
+                            <button class="add-step btn btn-secondary pull-right mt-3" type="button"><span
+                                    class="fa fa-plus"></span></button>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center mb-5 mt-3">
+        <div class="col-auto">
+            <a href="/dish/{DISH_ID}"><button class="btn btn-secondary mx-2" type="button">Cancel</button></a>
+            <a href="/dish/manage/edit/{DISH_ID}/3"><button class="btn btn-primary mx-2" type="button"><i class="fa fa-arrow-left"></i> Back</button></a>
+            <button class="btn btn-primary mx-2" type="submit">Save &amp; Complete</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,23 @@
+<div class="entry-ing form-row">
+    <div class="form-group col-md-4">
+        <input type="text" value="{INGREDIENT}" class="ac-ing form-control" placeholder="Start typing to find items">
+        <input name="ingredient_id[]" value="{INGREDIENT_ID}" type="hidden" class="ing_hidden">
+    </div>
+    <div class="form-group col-md-1">
+        <input name="quantity[]" value="{ING_QUANTITY}" type="number" class="form-control">
+    </div>
+    <div class="form-group col-md-2">
+        <select name="ingredient_unit[]" class="custom-select">
+            <option></option>
+            {UNITS_OPTIONS}
+        </select>
+    </div>
+    <div class="form-group col-md-5">
+        <div class="input-group">
+            <input name="comment[]" value="{ING_COMMENT}" type="text" class="form-control">
+            <div class="input-group-append">
+                <span class="delete-ing input-group-text"><span class="fa fa-minus"></span></span>
+            </div>
+        </div>
+    </div>
+</div>

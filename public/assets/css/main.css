@@ -1,0 +1,277 @@
+/*!
+ * Start Bootstrap - Modern Business (https://startbootstrap.com/template-overviews/modern-business)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-logomodern-business-nav/blob/master/LICENSE)
+ */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    padding-top: 54px;
+    margin-bottom: 60px;
+}
+
+@media (min-width: 992px) {
+    body {
+        padding-top: 56px;
+    }
+}
+
+.carousel-item {
+    /*height: 65vh;*/
+    min-height: 350px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.portfolio-item {
+    margin-bottom: 30px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px; /* Set the fixed height of the footer here */
+    line-height: 60px; /* Vertically center the text there */
+    padding-top: 0 !important;
+}
+
+.card-login {
+    max-width: 25rem;
+}
+
+.card-register {
+    max-width: 40rem;
+}
+
+td {
+    overflow: hidden;
+}
+
+.btn-full {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: -1000px;
+    padding: 1000px;
+}
+
+.text-wrap {
+    white-space: normal;
+}
+
+.card-wrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.width-100 {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.width-260 {
+    max-width: 260px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.width-300 {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.img-border {
+    border: 1px solid #dee2e6;
+    padding: .25rem;
+    border-radius: .25rem;
+}
+
+.page {
+    display: none;
+}
+
+.page-active {
+    display: flex;
+}
+
+.highlight {
+    background-color: yellow;
+}
+
+.add-ing,
+.delete-ing,
+.add-step,
+.delete-step,
+.add-eq,
+.delete-eq,
+.add-cat,
+.delete-cat,
+.add-yield,
+.delete-yield,
+.addnew-cat,
+.deletenew-cat,
+.plus-cursor {
+    cursor: pointer;
+}
+
+.scroll {
+    max-height: 455px;
+    overflow-y: auto;
+}
+
+.inconsolata {
+    /*font-family: Georgia, "Times New Roman", serif;*/
+    font-family: 'Inconsolata', monospace;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    /*font-weight: 100;*/
+    color: #212529;
+}
+
+/*noinspection CssInvalidPseudoSelector*/
+.withoutampm::-webkit-datetime-edit-ampm-field {
+    display: none;
+}
+
+.bg-blue {
+    background-color: #E0DCFF !important;
+}
+
+.bg-green {
+    background-color: #CFE1CE !important;
+}
+
+.capitlize {
+    text-transform: capitalize;
+}
+
+.sortable {
+    padding: 0 0 0 1em;
+    cursor: pointer;
+}
+
+.bg-stripped {
+    background: repeating-linear-gradient(
+            -45deg,
+            #e6f4ff,
+            #e6f4ff 2px,
+            #fff 3px,
+            #fff 6px
+    );
+}
+
+.bg-recipe {
+    background-color: #FFFFF5 !important;
+}
+
+.highlighted {
+    background-color: bisque;
+}
+
+.badge-checkboxes .checkbox input[type="checkbox"],
+.badge-checkboxes label.checkbox-inline input[type="checkbox"] {
+    /*  Hide the checkbox, but keeps tabbing to it possible. */
+    position: absolute;
+    clip: rect(0 0 0 0);
+}
+
+.badge-checkboxes .checkbox label,
+.badge-checkboxes label.checkbox-inline {
+    padding-left:0; /* Remove space normally used for the checkbox */
+}
+
+.badge-checkboxes .checkbox input[type="checkbox"] + .badge,
+.badge-checkboxes label.checkbox-inline input[type="checkbox"] + .badge {
+    /*border:1px solid #999; !* Add outline to badge *!*/
+    background-color: #007bff;
+    color: #fff;
+    font-weight: 400;
+    font-size: inherit;
+
+    /* Make text in badge not selectable */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Remove badge background-color and set text color for not checked options */
+.badge-checkboxes .checkbox input[type="checkbox"]:not(:checked) + .badge,
+.badge-checkboxes label.checkbox-inline input[type="checkbox"]:not(:checked) + .badge{
+    background-color:#fff;
+    color: #2b2b2b;
+    font-weight: 400;
+    font-size: inherit;
+}
+
+/*The following css only required for Bootstrap <= 3.1.0 */
+.badge-checkboxes .checkbox {
+    padding-left:0; /* Remove space normally used for the checkbox */
+    cursor: pointer;
+}
+.badge-checkboxes .disabled label,
+.badge-checkboxes label.checkbox-inline.disabled {
+    cursor:not-allowed;
+}
+
+label + .checkbox  {
+    margin-top:0;
+}
+
+.container-loader{
+    display:none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1060;
+}
+.loader {
+    border: 4px solid #d2d2d2;
+    border-top: 4px solid #283a93;
+    border-radius: 50%;
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    margin-right: -40px;
+    margin-top: -40px;
+    z-index: 1061;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.grayedout {
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+
+.popover { pointer-events: none; }

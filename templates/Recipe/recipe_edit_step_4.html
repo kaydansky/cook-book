@@ -1,0 +1,83 @@
+<form action="/recipe/manage/edit/{RECIPE_ID}" method="post" id="createRecipeForm" enctype="multipart/form-data">
+    <input type="hidden" name="recipe_title" value="{RECIPE_TITLE}">
+    <input type="hidden" name="description" value="{DESCRIPTION}">
+    <input type="hidden" name="image_filenames" value="{IMAGE_FILENAMES}">
+    <input type="hidden" name="step_image_filenames" value="{STEP_IMAGE_FILENAMES}">
+    <input type="hidden" name="source" value="{SOURCE}">
+    <input type="hidden" name="source_link" value="{SOURCE_LINK}">
+    <input type="hidden" name="prepare_hours" value="{prepare_hours}">
+    <input type="hidden" name="prepare_min" value="{prepare_min}">
+    <input type="hidden" name="cook_hours" value="{cook_hours}">
+    <input type="hidden" name="cook_min" value="{cook_min}">
+    <input type="hidden" name="notes" value="{NOTES}">
+    <input type="hidden" name="alt_search_terms" value="{ALT_SEARCH_TERMS}">
+    <input type="hidden" name="approved" value="{APPROVED_HIDDEN}">
+    <input type="hidden" name="wizard_step" value="4">
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white" id="imgs" name="imgs">
+            <h5>Instructions |
+                <small>Click <span class="fa fa-plus"></span> on the right to add another step. Click <span
+                        class="fa fa-minus"></span> to remove. Drag and drop to sort.
+                </small>
+            </h5>
+        </div>
+        <div class="card-body bg-light pb-0">
+            <div class="form-row bg-white mb-3">
+                <div class="form-group col-sm-3">
+                    <label for="step_image_id">Overall Step Images</label>
+                    <input name="step_image_id[]" id="step_image_id" type="file" class="form-control-file" style="border: none;" accept="image/*" multiple>
+                    <small class="form-text text-muted">Hold Ctrl button and click to select multiple files.</small>
+                </div>
+                <div class="form-group col-sm-9">
+                    <div class="row">
+                        {STEP_IMAGES}
+                    </div>
+                </div>
+            </div>
+            <div class="form-row ml-2">
+                <div class="form-group col-md-6 mb-0">
+                    <label>Step Description</label>
+                </div>
+                <div class="form-group col mb-0">
+                    <label>Step Images</label>
+                </div>
+                <div class="form-group col-md-5 mb-0">
+                    <label>Processed Ingredients</label>
+                </div>
+            </div>
+        </div>
+        <div class="card-body bg-light pt-0 pb-0">
+            <ol class="sortable controls-step">
+                {STEPS}
+                <li class="entry-step">
+                    <div class="form-row border rounded bg-white pt-3 mb-4 shadow">
+                        <div class="form-group col-md-6">
+                            <textarea name="step_content[]" rows="3" class="step_content form-control"></textarea>
+                        </div>
+                        <div class="form-group col">
+                            <a href="#" class="btn btn-outline-info text-dark" data-step-id="new-0" data-toggle="modal" data-target="#step-img-select">Select Images</a>
+                            <input class="new-0" type="hidden" name="images_step_filenames[]">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <div class="step-ingredients float-left">
+                                <input name="ingredient_array[]" type="hidden" class="step_ings_hidden">
+                                {INGREDIENT_OPTIONS_CLEAR}
+                            </div>
+                            <div class="float-right">
+                                <span class="add-step input-group-text"><span class="fa fa-plus"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center mb-5 mt-3">
+        <div class="col-auto">
+            <a href="/recipe/{RECIPE_ID}"><button class="btn btn-secondary mx-2" type="button">Cancel</button></a>
+            <a href="/recipe/manage/edit/{RECIPE_ID}/3"><button class="btn btn-primary mx-2" type="button"><i class="fa fa-arrow-left"></i> Back</button></a>
+            <button class="btn btn-primary mx-2" type="submit">Save &amp; Complete</button>
+        </div>
+    </div>
+</form>

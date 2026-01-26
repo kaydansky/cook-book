@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-sm">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><a id="{RECIPE_ID}" href="/recipe/{RECIPE_ID}" target="_blank">{RECIPE_TITLE}</a></h5>
+                <p class="card-text">
+                    {DESCRIPTION}
+                    {NOTES}
+                    {OPTIONS}
+                    {YIELDS}
+                </p>
+                <div class="card bg-recipe d-sm-table-cell">
+                    <div class="card-body pb-0">
+                        <h5 class="card-title">Ingredients</h5>
+                        <table class="table table-sm table-responsive">
+                            <tbody id="ingredientTable">
+                            {INGREDIENTS}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Steps</h5>
+                <p class="card-text">
+                    <ul class="list-group list-group-flush">
+                        {STEPS}
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

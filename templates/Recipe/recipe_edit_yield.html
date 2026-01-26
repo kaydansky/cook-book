@@ -1,0 +1,22 @@
+<div class="entry-yield form-row">
+    <div class="form-group col-md-4">
+        <select name="yield_type[]" class="custom-select">
+            <option value=""></option>
+            {TYPE_OPTIONS}
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <input name="yield_value[]" value="{QUANTITY}" type="number" class="form-control">
+    </div>
+    <div class="form-group col-md-4">
+        <div class="input-group">
+            <select name="yield_unit[]" class="custom-select">
+                <option></option>
+                {UNITS_OPTIONS}
+            </select>
+            <div class="input-group-append">
+                <span class="delete-yield input-group-text"><span class="fa fa-minus"></span></span>
+            </div>
+        </div>
+    </div>
+</div>

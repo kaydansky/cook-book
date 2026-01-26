@@ -1,0 +1,20 @@
+<form id="UpdateRestrictionForm" action="/dietary/manage/" method="post">
+    <input type="hidden" name="update_restriction_id" value="{RESTRICTION_ID}">
+    <div class="form-group">
+        <label for="Restriction">Restriction Name</label>
+        <input name="update_restriction_name" value="{RESTRICTION_NAME}" id="Restriction" class="form-control" type="text">
+    </div>
+    <div class="form-group">
+        <label for="Description">Descritpion</label>
+        <textarea name="update_description" class="form-control" rows="4" id="Description">{DESCRIPTION}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="Type">Type</label>
+        <select name="update_type" id="Type" class="form-control">{TYPE}</select>
+    </div>
+    <br>
+    <a href="javascript:history.back()"><button class="btn btn-secondary" type="button">Cancel</button></a>
+    <button class="btn btn-primary" type="submit">Update Category</button>
+    <a href="/dietary/manage/"><button class="btn btn-secondary pull-right" type="button">Back to List</button></a>
+</form>
+<br><br>

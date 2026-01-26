@@ -1,0 +1,23 @@
+<div class="entry-ing form-row">
+    <div class="form-group col-md-4">
+        <input value="{INGREDIENT}" type="text" class="ac-ing-rec form-control">
+        <input name="ingredient[]" value="{INGREDIENT_ID}|{UUID}" uuid="{UUID}" type="hidden" class="ing_hidden">
+    </div>
+    <div class="form-group col-md-1">
+        <input name="quantity[]" qty-id="{UUID}" value="{ING_QUANTITY}" type="number" class="form-control">
+    </div>
+    <div class="form-group col-md-2">
+        <select name="ingredient_unit[]" unit-id="{UUID}" class="custom-select">
+            <option></option>
+            {UNITS_OPTIONS}
+        </select>
+    </div>
+    <div class="form-group col-md-5">
+        <div class="input-group">
+            <input name="comment[]" value="{ING_COMMENT}" type="text" class="form-control">
+            <div class="input-group-append">
+                <span class="delete-ing input-group-text"><span class="fa fa-minus"></span></span>
+            </div>
+        </div>
+    </div>
+</div>

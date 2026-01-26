@@ -1,0 +1,37 @@
+<?php
+
+const DATABASE_CREDENTIALS = [
+    'hostname' => 'localhost',
+    'username' => 'root',
+    'password' => ''
+];
+
+const DATABASE_DEFAULT = 'cookbook';
+
+const EMAIL_SENDER = [
+    'host' => 'ssl://smtp.gmail.com',
+    'username' => 'your@email.address',
+    'password' => '',
+    'port' => 465,
+    'protocol' => 'tls'
+];
+
+const EMAIL_CONTENT = [
+    'reset_password_subject' => 'Cookbook password reset',
+    'reset_password_body' => 'Click <a href="%URL%">HERE</a> in order to reset your password.<br><br>If the link is not working, copy and past the following address into you browser\'s address bar:<br><br>%URL%<br><br>Best regards,<br>Cookbook Team',
+    'reset_password_alt_body' => 'To reset your password, copy and past the following address into you browser\'s address bar:<br><br>%URL%<br><br>Best regards,<br>Cookbook Team',
+    
+    'change_password_subject' => 'Your Cookbook password has been changed',
+    'change_password_body' => 'Your Cookbook password has been changed.',
+    'change_password_alt_body' => 'Your Cookbook password has been changed.',
+    
+    'new_user_subject' => 'Join Cookbook Invitation',
+    'new_user_body' => 'You are invited to join Cookbook.<br><br>Click <a href="%URL%">HERE</a> to create your password.<br><br>If the link is not working, copy and past the following address into you browser\'s address bar:<br><br>%URL%<br><br>Best regards,<br>Cookbook Team',
+    'new_user_alt_body' => 'You are invited to join Cookbook.<br><br>To create your password, copy and past the following address into you browser\'s address bar:<br><br>%URL%<br><br>Best regards,<br>Cookbook Team',
+];
+
+const PATH_TEMPLATES = __DIR__ . '/../templates' . DIRECTORY_SEPARATOR;
+
+const PATH_TEMPLATES_CONFIG = __DIR__ . '/../templates/config/';
+
+const PATH_IMAGES = __DIR__ . '/../public/images' . DIRECTORY_SEPARATOR;

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BlackBook | {META_TITLE}</title>
+    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container-fluid">
+
+    <!-- Recipe Title -->
+    <h2>{RECIPE_TITLE}</h2>
+
+    <!-- Alternative Search Term -->
+    <h4>{ALT_SEARCH_TERM}</h4>
+
+    <!-- Description. /templates/Generalinfo/Print/description.html -->
+    {DESCRIPTION}
+
+    <!-- Presrntation Images (optional). Edit: /templates/Recipe/Print/presentation_images.html -->
+    {PRESENTATION_IMAGES}
+
+    <!-- Dietary Restrictions. /templates/Generalinfo/Print/restrictions.html -->
+    {DIETARY_RESTRICTIONS}
+
+    <!-- Ingredients List.
+         Container: /templates/Recipe/Print/recipe_ingredients_container.html
+         Rows: /templates/Recipe/Print/print_recipe_ingredients.html-->
+    {INGREDIENTS}
+
+</div>
+</body>
+</html>

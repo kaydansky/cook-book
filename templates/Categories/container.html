@@ -1,0 +1,105 @@
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You are about to delete category <b><i class="title"></i></b>.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger btn-ok">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="my-3">{PAGE_TITLE}</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        {CONTENT}
+    </div>
+
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <h5 class="card-header">Create Category</h5>
+            <div class="card-body">
+                <form id="CreateCategoryForm" action="/categories/manage/" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input name="new_category_name" id="CategoryName" class="form-control" type="text" placeholder="Category Name">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="new_description" placeholder="Description" class="form-control" rows="4"></textarea>
+                    </div>
+                    <br>
+                    <button class="btn btn-primary" type="submit">Create Category</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    {NOTIFICATION}
+    
+    $(document).ready(function() {
+        $('#dataTable').DataTable({
+            order: [[0, 'asc']],
+            ajax: "/categories/manage/list/",
+            stateSave: true,
+            columnDefs: [
+            {
+                targets: 2,
+                searchable: false,
+                orderable: false,
+                render: function (data, type, full, meta) {
+                    return "<div class='text-wrap width-100'>" + data + "</div>";
+                }
+            },
+            {
+                targets: 1,
+                render: function (data, type, full, meta) {
+                    return "<div class='text-wrap width-260'>" + data + "</div>";
+                }
+            }]
+        });
+        
+        $('#confirm-delete').on('show.bs.modal', function(e) {
+            var data = $(e.relatedTarget).data();
+            $('.title', this).text(data.recordTitle);
+            $('.btn-ok', this).data('recordId', data.recordId);
+        });
+
+        $('#confirm-delete').on('click', '.btn-ok', function (e) {
+            var $modalDiv = $(e.delegateTarget);
+            var id = $(this).data('recordId');
+
+            $.post( "/categories/manage/", {delete_category_id: id}).done(function() {
+                $modalDiv.modal('hide');
+                location.reload();
+            });
+        });
+    });
+
+    $("#CreateCategoryForm").validate({
+        rules: {
+            new_category_name: {
+                required: true
+            }
+        },
+        messages: {
+            new_category_name: {
+                required: "Please provide Category Name"
+            }
+        }
+    });
+</script>

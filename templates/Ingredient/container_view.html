@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="my-3">{PAGE_TITLE}</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        {CONTENT}
+    </div>
+    <div class="col-md-3">
+        <div class="card mb-4">
+            <h5 class="card-header">Search</h5>
+            <div class="card-body">
+                <form action="/ingredient/" method="get">
+                    <div class="form-row align-items-center">
+                        <div class="input-group">
+                            <input id="srcInput" name="q" value="{QUERY}" type="text" class="form-control">
+                            &nbsp;<button type="submit" class="btn btn-primary">Go</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#srcInput").autocomplete({
+            source: "/ingredient/src/",
+            minLength: 2,
+            select: function (event, ui) {
+                window.location.assign("/ingredient/" + ui.item.id);
+            }
+        });
+
+        $("#catInput").autocomplete({
+            source: "/categories/src/",
+            minLength: 2,
+            select: function (event, ui) {
+                window.location.assign("/ingredient/?c=" + ui.item.id + "&category=" + ui.item.value);
+            }
+        });
+
+        $('[data-toggle="popover"]').popover({
+            trigger: 'hover',
+            placement: 'auto'
+        });
+    });
+
+    $("#srcInput").focus(function () {
+        $(this).val('');
+    });
+</script>

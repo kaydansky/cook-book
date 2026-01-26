@@ -1,0 +1,131 @@
+<form action="/recipe/manage/edit/{RECIPE_ID}" method="post" id="createRecipeForm">
+    <input type="hidden" name="recipe_title" value="{RECIPE_TITLE}">
+    <input type="hidden" name="description" value="{DESCRIPTION}">
+    <input type="hidden" name="image_filenames" value="{IMAGE_FILENAMES}">
+    <input type="hidden" name="step_image_filenames" value="{STEP_IMAGE_FILENAMES}">
+    <input type="hidden" name="source" value="{SOURCE}">
+    <input type="hidden" name="source_link" value="{SOURCE_LINK}">
+    <input type="hidden" name="prepare_hours" value="{prepare_hours}">
+    <input type="hidden" name="prepare_min" value="{prepare_min}">
+    <input type="hidden" name="cook_hours" value="{cook_hours}">
+    <input type="hidden" name="cook_min" value="{cook_min}">
+    <input type="hidden" name="notes" value="{NOTES}">
+    <input type="hidden" name="alt_search_terms" value="{ALT_SEARCH_TERMS}">
+    <input type="hidden" name="approved" value="{APPROVED_HIDDEN}">
+    <input type="hidden" name="wizard_step" value="2">
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">
+            <h5>Ingredients |
+                <small>Click <span class="fa fa-plus"></span> on the right to add another ingredient. Click <span
+                        class="fa fa-minus"></span> to remove. Start typing in "Ingredient/Recipe" to find items.
+                </small>
+            </h5>
+        </div>
+        <div class="card-header text-center">
+            <a href="#" class="btn btn-info" data-toggle="modal" data-target="#create-ingredient">Create Ingredient</a>
+        </div>
+        <div class="card-body bg-light pb-0">
+            <div class="form-row">
+                <div class="form-group col-md-4 mb-0">
+                    <label>Ingredient/Recipe</label>
+                </div>
+                <div class="form-group col-md-1 mb-0">
+                    <label>Quantity</label>
+                </div>
+                <div class="form-group col-md-2 mb-0">
+                    <label>Unit</label>
+                </div>
+                <div class="form-group col-md-5 mb-0">
+                    <label>Comment</label>
+                </div>
+            </div>
+        </div>
+        <div class="controls-ing card-body bg-light pt-0">
+            <div>
+                {INGREDIENTS}
+                <div class="entry-ing form-row bg-white pt-3">
+                    <div class="form-group col-md-4">
+                        <input type="text" name="selected_ingrdient" class="ac-ing-rec form-control">
+                        <input name="ingredient[]" value="" uuid="" type="hidden" class="ing_hidden">
+                    </div>
+                    <div class="form-group col-md-1">
+                        <input name="quantity[]" type="number" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <select name="ingredient_unit[]" class="custom-select">
+                            <option></option>
+                            {NEW_UNITS_OPTIONS}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <div class="input-group">
+                            <input name="comment[]" type="text" class="form-control">
+                            <div class="input-group-append">
+                                <span class="add-ing input-group-text"><span class="fa fa-plus"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">
+            <h5>Yields |
+                <small>Click <span class="fa fa-plus"></span> on the right to add another item. Click <span
+                        class="fa fa-minus"></span> to remove.
+                </small>
+            </h5>
+        </div>
+        <div class="card-body bg-light pb-0">
+            <div class="form-row">
+                <div class="form-group col-md-4 mb-0">
+                    <label>Yield Type</label>
+                </div>
+                <div class="form-group col-md-4 mb-0">
+                    <label>Quantity</label>
+                </div>
+                <div class="form-group col-md-4 mb-0">
+                    <label>Unit</label>
+                </div>
+            </div>
+        </div>
+        <div class="controls-yield card-body bg-light pt-0">
+            <div>
+                {YIELDS}
+                <div class="entry-yield form-row bg-white pt-3">
+                    <div class="form-group col-md-4">
+                        <select name="yield_type[]" class="yield-type-options custom-select">
+                            <option selected></option>
+                            <option value="Weight">Weight</option>
+                            <option value="Volume">Volume</option>
+                            <option value="Cover Count">Cover Count</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input name="yield_value[]" type="number" class="form-control">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="input-group">
+                            <select name="yield_unit[]" disabled class="yield-unit-options custom-select">
+                                <option></option>
+                            </select>
+                            <div class="input-group-append">
+                                <span class="add-yield input-group-text"><span class="fa fa-plus"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center mb-5 mt-3">
+        <div class="col-auto">
+            <a href="/recipe/{RECIPE_ID}"><button class="btn btn-secondary mx-2" type="button">Cancel</button></a>
+            <a href="/recipe/manage/edit/{RECIPE_ID}"><button class="btn btn-primary mx-2" type="button"><i class="fa fa-arrow-left"></i> Back</button></a>
+            <button class="btn btn-primary mx-2" type="submit">Save &amp; Continue <i class="fa fa-arrow-right"></i></button>
+        </div>
+    </div>
+</form>

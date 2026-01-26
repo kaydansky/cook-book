@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-md-12 my-3"><h2><small>Recipe</small> {RECIPE_TITLE}</h2></div>
+</div>
+
+<div class="row">
+    {CAROUSEL}
+    {DESCRIPTION}
+</div>
+
+<div class="row">
+    <div class="col">
+        <form method="get" class="form-inline mt-4" target="_blank">
+            <div class="btn-group dropdown keep-open" id="printDropdown">
+                <button type="submit" name="print" value="on" class="btn btn-secondary">Print</button>
+                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Options</span>
+                </button>
+                <div class="dropdown-menu keep-open bg-light">
+                    <div class="custom-control custom-checkbox ml-2 text-nowrap pr-2">
+                        <input id="presentationImg" name="presentation_img" type="checkbox" class="custom-control-input" value="on">
+                        <label class="custom-control-label justify-content-start" for="presentationImg">Print Presentation Images</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="recipe-body">
+    <div class="row mb-5 mt-4">
+        <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Ingredients | <small><span class="text-primary">Blue</span> 
+                            = Ingredient, 
+                            <span class="text-success">Green</span> 
+                            = Recipe</small></h4>
+                </div>
+                <div class="card-body mb-0">
+                    <table class="table">
+                        <tbody id="ingredientTable">
+                            {LIST_INGREDIENTS}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {RESTRICTIONS}
+        </div>
+    </div>
+</div>
+
+<a href="javascript:history.back()"><button class="btn btn-secondary mr-2 mb-5" type="button">Go Back</button></a>

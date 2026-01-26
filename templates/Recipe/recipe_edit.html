@@ -1,0 +1,338 @@
+<form action="/recipe/manage/edit/{RECIPE_ID}" method="post" id="createRecipeForm" enctype="multipart/form-data">
+    <input type="hidden" name="image_filenames" value="{IMAGE_FILENAMES}">
+    <input type="hidden" name="step_image_filenames" value="{STEP_IMAGE_FILENAMES}">
+    <input type="hidden" name="wizard_step" value="4">
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">
+            <h5>General Information</small>
+            </h5>
+        </div>
+        <div class="card-body bg-light">
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label for="recipe_title">Recipe Title​</label>
+                    <input name="recipe_title" value="{RECIPE_TITLE}" type="text" class="form-control" id="recipe_title">
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="alt_names">Alternative Names</label>
+                    <textarea name="alt_search_terms" class="form-control" id="alt_names" rows="3">{ALT_SEARCH_TERMS}</textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label for="source">Source</label>
+                    <input name="source" value="{SOURCE}" type="text" class="form-control" id="source">
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="source">Source Link</label>
+                    <input name="source_link" value="{SOURCE_LINK}" type="text" class="form-control" id="source_link">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label for="description">Description</label>
+                    <textarea name="description" class="form-control" id="description" rows="3">{DESCRIPTION}</textarea>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="notes">Notes</label>
+                    <textarea name="notes" id="notes" class="form-control" rows="3">{NOTES}</textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm">
+                    <label>Preparation Time</label>
+                    <div class="row">
+                        <div class="col-md-6 pr-2">
+                            <input name="prepare_hours" value="{prepare_hours}" type="number" class="form-control time-selector withoutampm" id="prepareHours" placeholder="Hrs">
+                            <small class="form-text text-muted">Hrs</small>
+                        </div>
+                        <div class="col-md-6 pl-0 pr-4">
+                            <input name="prepare_min" value="{prepare_min}" type="number" class="form-control time-selector withoutampm" id="prepareMin" placeholder="Min">
+                            <small class="form-text text-muted">Min</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-sm">
+                    <label>Cooking Time</label>
+                    <div class="row">
+                        <div class="col-md-6 pr-2">
+                            <input name="cook_hours" value="{cook_hours}" type="number" class="form-control time-selector withoutampm" id="cookHours" placeholder="Hrs">
+                            <small class="form-text text-muted">Hrs</small>
+                        </div>
+                        <div class="col-md-6 pl-0 pr-4">
+                            <input name="cook_min" value="{cook_min}" type="number" class="form-control time-selector withoutampm" id="cookMin" placeholder="Min">
+                            <small class="form-text text-muted">Min</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-sm">
+                    <label for="time_to_prepare">Total Time</label>
+                    <input name="time_to_prepare" type="text" class="form-control"
+                           id="time_to_prepare" readonly>
+                </div>
+                <div class="controls-cat form-group col-sm-6">
+                    <label>Categories</label>
+                    <div>
+                        {CATEGORIES}
+                        <div class="entry-cat input-group mb-3">
+                            <input name="category_id[]" type="hidden" class="cat_hidden">
+                            <input name="category_name" type="text" class="ac-cat form-control">
+                            <div class="input-group-append">
+                                <span class="add-cat input-group-text"><span class="fa fa-plus"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-3">
+                    <label for="image_id">Presentation Images</label>
+                    <input name="image_id[]" id="image_id" type="file" class="form-control-file" style="border: none;" accept="image/*" multiple>
+                    <small class="form-text text-muted">Hold Ctrl button and click to select multiple files.</small>
+                </div>
+                <div class="form-group col-sm-9">
+                    <div class="row">
+                        {IMAGES}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">
+            <h5>Ingredients |
+                <small>Click <span class="fa fa-plus"></span> on the right to add another ingredient. Click <span
+                        class="fa fa-minus"></span> to remove. Start typing in "Ingredient/Recipe" to find items.
+                </small>
+            </h5>
+        </div>
+        <div class="card-header text-center">
+            <a href="#" class="btn btn-info" data-toggle="modal" data-target="#create-ingredient">Create Ingredient</a>
+        </div>
+        <div class="card-body bg-light pb-0">
+            <div class="form-row">
+                <div class="form-group col-md-4 mb-0">
+                    <label>Ingredient/Recipe</label>
+                </div>
+                <div class="form-group col-md-1 mb-0">
+                    <label>Quantity</label>
+                </div>
+                <div class="form-group col-md-2 mb-0">
+                    <label>Unit</label>
+                </div>
+                <div class="form-group col-md-5 mb-0">
+                    <label>Comment</label>
+                </div>
+            </div>
+        </div>
+        <div class="controls-ing card-body bg-light pt-0">
+            <div>
+                {INGREDIENTS}
+                <div class="entry-ing form-row bg-white pt-3">
+                    <div class="form-group col-md-4">
+                        <input type="text" name="selected_ingrdient" class="ac-ing-rec form-control">
+                        <input name="ingredient[]" type="hidden" class="ing_hidden" uuid="">
+                    </div>
+                    <div class="form-group col-md-1">
+                        <input name="quantity[]" type="number" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <select name="ingredient_unit[]" class="custom-select">
+                            <option></option>
+                            {NEW_UNITS_OPTIONS}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <div class="input-group">
+                            <input name="comment[]" type="text" class="form-control">
+                            <div class="input-group-append">
+                                <span class="add-ing input-group-text"><span class="fa fa-plus"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white" id="imgs" name="imgs">
+            <h5>Instructions |
+                <small>Click <span class="fa fa-plus"></span> on the right to add another step. Click <span
+                        class="fa fa-minus"></span> to remove. Drag and drop to sort.
+                </small>
+            </h5>
+        </div>
+        <div class="card-body bg-light pb-0">
+            <div class="form-row bg-white mb-3">
+                <div class="form-group col-sm-3">
+                    <label for="step_image_id">Overall Step Images</label>
+                    <input name="step_image_id[]" id="step_image_id" type="file" class="form-control-file" style="border: none;" accept="image/*" multiple>
+                    <small class="form-text text-muted">Hold Ctrl button and click to select multiple files.</small>
+                </div>
+                <div class="form-group col-sm-9">
+                    <div class="row">
+                        {STEP_IMAGES}
+                    </div>
+                </div>
+            </div>
+            <div class="form-row ml-2">
+                <div class="form-group col-md-6 mb-0">
+                    <label>Step Description</label>
+                </div>
+                <div class="form-group col mb-0">
+                    <label>Step Images</label>
+                </div>
+                <div class="form-group col-md-5 mb-0">
+                    <label>Processed Ingredients</label>
+                </div>
+            </div>
+        </div>
+        <div class="card-body bg-light pt-0 pb-0">
+            <ol class="sortable controls-step">
+                {STEPS}
+                <li class="entry-step">
+                    <div class="form-row border rounded bg-white pt-3 mb-4 shadow">
+                        <div class="form-group col-md-6">
+                            <textarea name="step_content[]" rows="3" class="step_content form-control"></textarea>
+                        </div>
+                        <div class="form-group col">
+                            <a href="#" class="btn btn-outline-info text-dark" data-step-id="new-0" data-toggle="modal" data-target="#step-img-select">Select Images</a>
+                            <input class="new-0" type="hidden" name="images_step_filenames[]">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <div class="step-ingredients float-left">
+                                <input name="ingredient_array[]" type="hidden" class="step_ings_hidden">
+                                {INGREDIENT_OPTIONS_CLEAR}
+                            </div>
+                            <div class="float-right">
+                                <span class="add-step input-group-text"><span class="fa fa-plus"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">
+            <h5>Yields |
+                <small>Click <span class="fa fa-plus"></span> on the right to add another item. Click <span
+                        class="fa fa-minus"></span> to remove.
+                </small>
+            </h5>
+        </div>
+        <div class="card-body bg-light pb-0">
+            <div class="form-row">
+                <div class="form-group col-md-4 mb-0">
+                    <label>Yield Type</label>
+                </div>
+                <div class="form-group col-md-4 mb-0">
+                    <label>Quantity</label>
+                </div>
+                <div class="form-group col-md-4 mb-0">
+                    <label>Unit</label>
+                </div>
+            </div>
+        </div>
+        <div class="controls-yield card-body bg-light pt-0">
+            <div>
+                {YIELDS}
+                <div class="entry-yield form-row bg-white pt-3">
+                    <div class="form-group col-md-4">
+                        <select name="yield_type[]" class="yield-type-options custom-select">
+                            <option selected></option>
+                            <option value="Weight">Weight</option>
+                            <option value="Volume">Volume</option>
+                            <option value="Cover Count">Cover Count</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <input name="yield_value[]" type="number" class="form-control">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="input-group">
+                            <select name="yield_unit[]" disabled class="yield-unit-options custom-select">
+                                <option></option>
+                            </select>
+                            <div class="input-group-append">
+                                <span class="add-yield input-group-text"><span class="fa fa-plus"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">
+            <h5>Equipment |
+                <small>Click <span class="fa fa-plus"></span> on the right to add another item. Click <span
+                        class="fa fa-minus"></span> to remove.
+                </small>
+            </h5>
+        </div>
+        <div class="card-body bg-light pb-0">
+            <div class="form-row">
+                <div class="form-group col-md-4 mb-0">
+                    <label>Item</label>
+                </div>
+                <div class="form-group col-md-2 mb-0">
+                    <label>Quantity</label>
+                </div>
+                <div class="form-group col-md-6 mb-0">
+                    <label>Comment</label>
+                </div>
+            </div>
+        </div>
+        <div class="controls-eq card-body bg-light pt-0">
+            <div>
+                {EQUIPMENT}
+                <div class="entry-eq form-row bg-white pt-3">
+                    <div class="form-group col-md-4">
+                        <select name="equipment_id[]" class="custom-select">
+                            <option value=""></option>
+                            {NEW_EQUIPMENT_OPTIONS}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <input name="eq_quantity[]" type="number" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="input-group">
+                            <input name="eq_comment[]" type="text" class="form-control">
+                            <div class="input-group-append">
+                                <span class="add-eq input-group-text"><span class="fa fa-plus"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="card mb-3">
+                <div class="card-header bg-secondary text-white"><h5>Approval</h5></div>
+                <div class="controls-eq card-body bg-light">
+                    <div class="custom-control custom-checkbox mr-sm-2">
+                        <input name="approved" type="checkbox" class="custom-control-input" value="on" id="approved"
+                               {APPROVED_CHECKED}>
+                        <label class="custom-control-label" for="approved">Approved</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center mb-5 mt-3">
+        <div class="col-auto">
+            <a href="/recipe/{RECIPE_ID}"><button class="btn btn-secondary mr-2" type="button">Cancel</button></a>
+            <button class="btn btn-primary ml-2" type="submit">Update Recipe</button>
+        </div>
+    </div>
+</form>

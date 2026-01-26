@@ -1,0 +1,28 @@
+<img class="img-fluid rounded" src="{IMAGE_FILENAME}" alt="China Image">
+<hr>
+<form id="UpdateChinaForm" action="/china/manage/" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="update_china_id" value="{CHINA_ID}">
+    <div class="form-group">
+        <div class="custom-control custom-checkbox mr-sm-2">
+            <input name="remove_image" type="checkbox" class="custom-control-input" value="on" id="removeImage">
+            <label class="custom-control-label" for="removeImage">Remove Image</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="ChinaImage">Change Image</label>
+        <input name="update_china_image" type="file" class="form-control-file" style="border: none;" id="ChinaImage">
+    </div>
+    <div class="form-group">
+        <label for="China">China Name</label>
+        <input name="update_china_name" value="{CHINA_NAME}" id="China" class="form-control" type="text">
+    </div>
+    <div class="form-group">
+        <label for="Manufacturer">Manufacturer</label>
+        <input name="update_manufacturer" value="{MANUFACTURER}" id="Manufacturer" class="form-control" type="text">
+    </div>
+    <br>
+    <a href="javascript:history.back()"><button class="btn btn-secondary" type="button">Cancel</button></a>
+    <button class="btn btn-primary" type="submit">Update Ingredient</button>
+    <a href="/china/manage/"><button class="btn btn-secondary pull-right" type="button">Back to List</button></a>
+</form>
+<br><br>

@@ -1,0 +1,278 @@
+<div class="modal fade" id="img-enlarge" tabindex="-1" role="dialog" aria-labelledby="ModalEnlarge" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl row align-items-center">
+        <div class="col modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalEnlarge">Instructions Images</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="height: 800px;">
+                <div class="row justify-content-center" id="StepImgList"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{CONTENT}
+
+<script>
+    $(function () {
+        $("#srcInput").autocomplete({
+            source: "/recipe/src/",
+            minLength: 2,
+            select: function (event, ui) {
+                window.location.assign("/recipe/" + ui.item.id);
+            }
+        });
+
+        $('[data-toggle="popover"]').popover({
+            trigger: 'hover',
+            placement: 'auto'
+        });
+    });
+
+    $("#srcInput").focus(function () {
+        $(this).val('');
+    });
+
+    $('#img-enlarge').on('show.bs.modal', function (e) {
+        var data = $(e.relatedTarget).data();
+
+        $.post('/recipe/', {get_step_images_carousel: 1, recipe_id: data.recipeId, current_image: data.current}).done(function(data) {
+            $('#StepImgList').html(data);
+        });
+    }).modal('handleUpdate');
+
+    $('#img-enlarge').on('slide.bs.carousel', function (e) {
+        $('#sliderSteps').carousel('pause');
+    });
+
+    $('#scale-custom').on('input', function () {
+        $('input[type=radio][name=scale]').prop('checked', false);
+        $('.scale-label').removeClass('active');
+        $('#convert-select').prop('selectedIndex', 0);
+        $("#yield-unit-name").html($("#yield-unit").html());
+        let value = $(this).val() ? parseFloat($(this).val()) : 1;
+        scaleIngredients(value);
+        scaleYields(value);
+
+        if ($(this).val() === null || $(this).val() === '') {
+            $('#scaleDefault').addClass('active');
+        }
+    });
+
+    $('input[type=radio][name=scale]').change(function () {
+        $("#scale-custom").val('');
+        $('#convert-select').prop('selectedIndex', 0);
+        let value = parseFloat($(this).val());
+        scaleIngredients(value);
+        scaleYields(value);
+    });
+
+    $('#recipe-body').on('input', '.yield-value, .ingr-quantity', function () {
+        let value = parseFloat($(this).val());
+        let c = value / $(this).attr('converted');
+        let count = $(this).attr('count');
+        
+        $('.ingr-quantity').each(function () {
+            if (count !== $(this).attr('count')) {
+                let n = $(this).attr('converted') * c;
+                let newValue = isInt(n) ? n.toFixed() : n.toFixed(2);
+                $(this).val(newValue);
+                $('span[id-qty="' + $(this).attr('ingid') + '"]').html(newValue);
+                resetInput(this);
+            } else {
+                $('span[id-qty="' + $(this).attr('ingid') + '"]').html($(this).val());
+            }
+        });
+
+        $('.yield-value').each(function () {
+            if (count !== $(this).attr('count')) {
+                let n = $(this).attr('converted') * c;
+                let newValue = isInt(n) ? n.toFixed() : n.toFixed(2);
+                $(this).val(newValue);
+                resetInput(this, 8, 9);
+            }
+        });
+    });
+
+    function scaleYields(value) {
+        $('.yield-value').each(function () {
+            let n = $(this).attr('original') * value;
+            let num = isInt(n) ? n.toFixed() : n.toFixed(2);
+            $(this).val(num);
+            $(this).attr('scaled', num);
+            $(this).closest('td').next('td').find('.yield-unit-name').text($(this).attr('yieldunit'));
+            resetInput(this, 8, 9);
+        });
+    }
+
+    function scaleIngredients(value) {
+        $('.ingr-quantity').each(function () {
+            if ($(this).attr('measurement') || $(this).attr('yieldunit') == 'ea') {
+                let ni = $(this).attr('original') * value;
+                let numIngr = isInt(ni) ? ni.toFixed() : ni.toFixed(2);
+                $(this).val(numIngr);
+                $(this).attr('scaled', numIngr);
+                $(this).closest('div').next('div').html($(this).attr('yieldunit'));
+                $('span[id-qty="' + $(this).attr('ingid') + '"]').html(numIngr);
+                $('span[id-unit="' + $(this).attr('ingid') + '"]').html($(this).attr('yieldunit'));
+                $('.converter-label').removeClass('active');
+                $('#Metric').addClass('active');
+                resetInput(this);
+            }
+        });
+    }
+
+    $('input[type=radio][name=unit_converter]').change(function () {
+        if (! $(this).val()) {
+            return false;
+        }
+
+        var convertTo = $(this).val();
+
+        $('.ingr-quantity').each(function () {
+            if ($(this).attr('measurement') !== convertTo && $(this).attr('yieldcode')) {
+                let convertIngr = conversionObject.functions.converter(
+                    $(this).attr('yieldtype'),
+                    $(this).attr('yieldcode'),
+                    $(this).attr('conversion'),
+                    $(this).attr('scaled'));
+
+                $(this).val(convertIngr);
+                $('span[id-qty="' + $(this).attr('ingid') + '"]').html(convertIngr);
+                $(this).attr('converted', convertIngr);
+                $(this).closest('div').next('div').html($(this).attr('conversionunit'));
+                $('span[id-unit="' + $(this).attr('ingid') + '"]').html($(this).attr('conversionunit'));
+            } else {
+                $(this).val($(this).attr('scaled'));
+                $('span[id-qty="' + $(this).attr('ingid') + '"]').html($(this).attr('scaled'));
+                $(this).attr('converted', $(this).attr('scaled'));
+                $(this).closest('div').next('div').html($(this).attr('yieldunit'));
+                $('span[id-unit="' + $(this).attr('ingid') + '"]').html($(this).attr('yieldunit'));
+            }
+
+            resetInput(this);
+        });
+
+        $('.yield-value').each(function () {
+            if ($(this).attr('measurement') !== convertTo && $(this).attr('yieldcode')) {
+                let convertIngr = conversionObject.functions.converter(
+                    $(this).attr('yieldtype'),
+                    $(this).attr('yieldcode'),
+                    $(this).attr('conversion'),
+                    $(this).attr('scaled'));
+
+                $(this).val(convertIngr);
+                $(this).attr('converted', convertIngr);
+                $(this).closest('td').next('td').find('.yield-unit-name').text($(this).attr('conversionunit'));
+            } else {
+                $(this).val($(this).attr('scaled'));
+                $(this).attr('converted', $(this).attr('scaled'));
+                $(this).closest('td').next('td').find('.yield-unit-name').text($(this).attr('yieldunit'));
+            }
+
+            resetInput(this, 8, 9);
+        });
+    });
+
+    $('#reset').on('click', function () {
+        scaleIngredients(1);
+        scaleYields(1);
+        $('#scaleDefault').addClass('active');
+        $("#scale-custom").val('');
+        $('#convert-select').prop('selectedIndex', 0);
+        return false;
+    });
+
+    function isInt(n) {
+        return n % 1 === 0;
+    }
+    
+    function resetInput(s, offset = 8, factor = 10) {
+        s.style.width = ((s.value.length + offset) * factor) + 'px';
+    }
+
+    $('.dietary').on('click', function () {
+        var cls = 'highlighted font-weight-bold';
+        var a = $(this).attr('recipes').split(',');
+        var control = $(this);
+
+        $('.dietary').not(this).each(function () {
+            $(this).removeClass(cls);
+        });
+
+        $('#ingredientTable').find('a').each(function () {
+            $(this).removeClass(cls);
+        });
+
+        control.hasClass(cls) ? control.removeClass(cls) : control.addClass(cls);
+
+        $.each(a, function (index, value) {
+            var selector = $('#' + value);
+            control.hasClass(cls) ? selector.addClass(cls) : selector.removeClass(cls);
+        });
+
+        return false;
+    });
+
+    $('.highlight-steps').on('click', function () {
+        var cls = 'highlighted';
+        var a = $(this).attr('images').split(',');
+        var c = $(this).attr('count');
+        var s = $(this).attr('step-id');
+        var control = $(this);
+
+        $('.highlight-steps').not(this).each(function () {
+            $(this).removeClass(cls);
+        });
+
+        clearStepImages(cls);
+        $("p[id^='go-to-']").removeClass('d-block').addClass('d-none');
+        $('#stepImagesContainer').find('img').removeClass('grayedout');
+        $('.link-enlarge').attr('data-target', '#img-enlarge').attr('href', '#');
+        control.hasClass(cls) ? control.removeClass(cls) : control.addClass(cls);
+
+        $.each($('.step-image-card'), function () {
+            var id = $(this).closest('div').attr('id');
+            var selector = $('#' + id);
+            var link = $(this).children('div').children('a');
+
+            if ($.inArray(id, a) !== -1 && control.hasClass(cls)) {
+                selector.addClass(cls);
+                selector.find('img').removeClass('grayedout');
+                $('#go-to-' + c).removeClass('d-none').addClass('d-block');
+                link.attr('data-target', '#img-enlarge').attr('href', '#').attr('data-step-id', s);
+                goToImages();
+            } else if (control.hasClass(cls)) {
+                selector.find('img').addClass('grayedout');
+                link.removeAttr('data-target').removeAttr('href').removeAttr('data-step-id');
+            }
+        });
+
+        return false;
+    });
+
+    function clearStepImages(cls) {
+        $('#stepImagesContainer').find("div[class^='card']").each(function () {
+            $(this).removeClass(cls);
+        });
+    }
+
+    function goToImages () {
+        $('.go-to-images').click(function () {
+            var focusTag = $("div[id='stepImagesContainer']");
+            $('html,body').animate({scrollTop: focusTag.offset().top}, 'slow');
+        });
+    }
+
+    $('#printDropdown .dropdown-menu').on({
+        "click":function(e){
+            e.stopPropagation();
+        }
+    });
+</script>

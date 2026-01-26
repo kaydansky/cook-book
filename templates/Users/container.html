@@ -1,0 +1,116 @@
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You are about to delete user <b><i class="title"></i></b>.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger btn-ok">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="my-3">Manage Users</h2>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-9 mb-5">
+        {USER_LIST}
+    </div>
+
+    <div class="col-md-3 mb-5">
+        {CREATE_USER}
+        <div class="card">
+            <h5 class="card-header">Change Password</h5>
+            <div class="card-body">
+                <form id="ChangePwForm" action="/users/" method="post">
+                    <div class="form-group">
+                        <input name="password_current" id="PasswordCurrent" class="form-control" type="password" placeholder="Current Password">
+                    </div>
+                    <div class="form-group">
+                        <input name="password" id="Password" class="form-control" type="password" placeholder="New Password">
+                    </div>
+                    <div class="form-group">
+                        <input name="password_c" id="ConfirmPassword" class="form-control" type="password" placeholder="Confirm New Password">
+                    </div>
+                    <button class="btn btn-secondary" type="submit">Change Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    {NOTIFICATION}
+    
+    $(document).ready(function() {
+        $("#dataTable").DataTable({
+            "columns": [
+                null,
+                null,
+                null,
+                null,
+                { "orderable": false }
+            ]
+        });
+    });
+
+    $("#ChangePwForm").validate({
+        rules: {
+            password_current: {
+                required: true
+            },
+            password: {
+                required: true,
+                minlength: 5
+            },
+            password_c: {
+                required: true,
+                minlength: 5,
+                equalTo: "#Password"
+            }
+        },
+        messages: {
+            password_current: {
+                required: "Please provide your current password"
+            },
+            password: {
+                required: "Please provide new password",
+                minlength: "Your password must be at least 5 characters long"
+            },
+            password_c: {
+                required: "Please confirm new password",
+                minlength: "Your password must be at least 5 characters long",
+                equalTo: "Please enter the same password as above"
+            }
+        }
+    });
+    
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+        var data = $(e.relatedTarget).data();
+        $('.title', this).text(data.recordTitle);
+        $('.btn-ok', this).data('recordId', data.recordId);
+    });
+
+    $('#confirm-delete').on('click', '.btn-ok', function (e) {
+        var $modalDiv = $(e.delegateTarget);
+        var id = $(this).data('recordId');
+
+        $.post( "/users/", {delete_user_id: id}).done(function() {
+            $modalDiv.modal('hide');
+            location.reload();
+        });
+    });
+</script>

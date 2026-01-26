@@ -1,0 +1,33 @@
+<div class="col-sm-auto" style="font-size: 1rem;">
+    <table class="table table-sm mb-2 table-bordered bg-light">
+        <tbody>
+        <tr>
+            <td class="align-middle">
+                <span style="text-transform: capitalize;">{YIELD}</span>
+            </td>
+            <td>
+                <input
+                        original="{YIELD_VALUE}"
+                        scaled="{YIELD_VALUE}"
+                        count="{YIELD_COUNT}"
+                        yieldtype="{YIELD_TYPE}"
+                        yieldcode="{YIELD_CODE}"
+                        measurement="{MEASUREMENT_SYSTEM}"
+                        conversion="{CONVERSION}"
+                        converted="{YIELD_VALUE}"
+                        conversionunit="{CONVERSION_UNIT}"
+                        yieldunit="{YIELD_UNIT_NAME}"
+                        value="{YIELD_VALUE}"
+                        type="number"
+                        step="0.5"
+                        class="yield-value form-control"
+                        style="max-width:100px; border: 0 !important;"
+                        oninput="this.style.width = ((this.value.length + 8) * 10) + 'px';">
+            </td>
+            <td class="align-middle">
+                <span class="yield-unit-name">{YIELD_UNIT_NAME}</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

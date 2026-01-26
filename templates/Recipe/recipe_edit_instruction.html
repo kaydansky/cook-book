@@ -1,0 +1,31 @@
+<li class="entry-step">
+    <div class="form-row bg-stripped border rounded pt-3 shadow">
+        <div class="form-group col-md-6">
+            <textarea name="step_content[]" rows="3" class="step_content form-control">{STEP_CONTENT}</textarea>
+        </div>
+        <div class="form-group col">
+            <div class="row m-0">
+                <a href="#" class="btn btn-outline-info text-dark" data-step-id="{STEP_ID}" data-toggle="modal" data-target="#step-img-select">Select Images</a>
+                <input class="{STEP_ID}" type="hidden" name="images_step_filenames[]">
+                <input class="{STEP_ID}" type="hidden" name="step_images_current[]" value="{STEP_IMAGES_CURRENT}">
+            </div>
+            <div class="row">
+                <div class="col-sm-12 p-0">
+                    {IMAGE}
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-5">
+            <div class="step-ingredients float-left">
+                <input name="ingredient_array[]" value="{INGREDIENT_ARRAY}" type="hidden" class="step_ings_hidden">
+                {INGREDIENT_OPTIONS}
+            </div>
+            <div class="float-right">
+                <span class="delete-step input-group-text"><span class="fa fa-minus"></span></span>
+            </div>
+        </div>
+    </div>
+    <div>
+        <hr class="mt-0 mb-4">
+    </div>
+</li>

@@ -1,0 +1,19 @@
+<div class="card mb-4">
+    <div class="card-body">
+        <h2 class="card-title">No User Available</h2>
+        <p class="card-text">Users can only be created by a Chef level user.</p>
+        <p class="card-text font-italic">Process: Chef creates new user with 
+            desired privilege (Role), inputs first name, last name and email
+            address. Confirmation email sent to new user who must confirm and 
+            create password on first login.</p>
+        <p>Chef level users can delete users.</p>
+        <p>All users can reset their own password with email link back.</p>
+        <p class="{ADD_USER_BTN_DISPLAY}"><br><a id="FocusAddUser" href="#" class="btn btn-primary pull-right">Add User Now &rarr;</a></p>
+    </div>
+</div>
+
+<script>
+    $("#FocusAddUser").click(function(){
+        $("#FirstName").focus();
+    });
+</script>

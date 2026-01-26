@@ -1,0 +1,315 @@
+<form action="/dish/manage/edit/{DISH_ID}" method="post" id="createDishForm" enctype="multipart/form-data">
+    <input type="hidden" name="image_filenames" value="{IMAGE_FILENAMES}">
+    <input type="hidden" name="wizard_step" value="4">
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white"><h5>General Information</h5></div>
+        <div class="card-body bg-light">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="dishTite">Dish Title​</label>
+                    <input name="dish_title" value="{DISH_TITLE}" type="text" class="form-control" id="dishTite">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="dishSubtitle">Dish Subtitle</label>
+                    <input name="dish_subtitle" value="{DISH_SUBTITLE}" type="text" class="form-control"
+                           id="dishSubtitle">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="source">Source</label>
+                    <input name="source" value="{SOURCE}" type="text" class="form-control" id="source">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="source_link">Source Link</label>
+                    <input name="source_link" value="{SOURCE_LINK}" type="text" class="form-control" id="source_link">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="description">Description</label>
+                    <textarea name="description" class="form-control" id="description" rows="3">{DESCRIPTION}</textarea>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="notes">Notes</label>
+                    <textarea name="notes" id="notes" class="form-control" rows="3">{NOTES}</textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label>Marking</label>
+                    <textarea name="this_marking" class="form-control" rows="3">{THIS_MARKING}</textarea>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Wine Pairing</label>
+                    <textarea name="this_wine_pairing" class="form-control" rows="3">{THIS_WINE_PAIRING}</textarea>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>China</label>
+                    <input type="text" value="{THIS_CHINA}" class="ac-china form-control mb-3" placeholder="Start typing to find items">
+                    <input name="this_china_id" value="{THIS_CHINA_ID}" type="hidden" class="china_hidden">
+                    <label>Primary/Original Dish Date</label>
+                    <input name="dish_date" value="{DISH_DATE}" type="date" class="form-control">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="fohKitchenAssembly">Kitchen Assembly</label>
+                    <textarea name="foh_kitchen_assembly" class="form-control" id="fohKitchenAssembly" rows="3">{FOH_KITCHEN_ASSEMBLY}</textarea>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="fohDiningAssembly">Dining Assembly</label>
+                    <textarea name="foh_dining_assembly" id="fohDiningAssembly" class="form-control" rows="3">{FOH_DINING_ASSEMBLY}</textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="fohPurveyors">Purveyors</label>
+                    <textarea name="foh_purveyors" id="fohPurveyors" class="form-control"
+                              rows="3">{FOH_PURVEYORS}</textarea>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Presentation Images</label>
+                    <input name="image_id[]" type="file" class="form-control-file" style="border: none;"
+                           accept="image/*" multiple>
+                    <small class="form-text text-muted">Hold Ctrl button and click to select multiple files.</small>
+                </div>
+                <div class="controls-cat form-group col-md-3">
+                    <label>Categories</label>
+                    <div>
+                        {CATEGORIES}
+                        <div class="entry-cat input-group mb-3">
+                            <input name="category_id[]" type="hidden" class="cat_hidden">
+                            <input name="category_name" type="text" class="ac-cat form-control"
+                                   placeholder="Start typing to find items">
+                            <div class="input-group-append">
+                                <span class="add-cat input-group-text"><span class="fa fa-plus"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="row">
+                        {IMAGES}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">
+            <h5>Alternatives |
+                <small>Click <span class="fa fa-plus"></span> on the right to add another Date. Click <span
+                        class="fa fa-minus"></span> to remove.
+                </small>
+            </h5>
+        </div>
+        <div class="controls-date card-body bg-light">
+            <div>
+                {ALTERNATIVES}
+                <div class="entry-date form-row">
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label>Date</label>
+                            <input name="date[]" type="date" class="form-control">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label>Alternative Title</label>
+                            <input name="alternative_title[]" type="text" class="form-control">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Alternative Subitle</label>
+                            <input name="alternative_subtitle[]" type="text" class="form-control">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Marking</label>
+                            <textarea name="marking[]" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Wine Pairing</label>
+                            <textarea name="wine_pairing[]" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>China</label>
+                            <input type="text" class="ac-china form-control" placeholder="Start typing to find items">
+                            <input name="china_id[]" type="hidden" class="china_hidden">
+                            <button class="add-date btn btn-secondary pull-right mt-3" type="button"><span
+                                    class="fa fa-plus"></span></button>
+                        </div>
+                    </div>
+                    <div class="form-row w-100">
+                        <hr class="w-100 bg-primary">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">
+            <h5>Instructions Assembly |
+                <small>Click <span class="fa fa-plus"></span> on the right to add another step. Click <span
+                        class="fa fa-minus"></span> to remove. Drag and drop to sort.
+                </small>
+            </h5>
+        </div>
+        <div class="card-body bg-light pb-0">
+            <div class="form-row ml-2">
+                <div class="form-group col-md-7 mb-0">
+                    <label>Step Description</label>
+                </div>
+                <div class="form-group col-md-4 mb-0">
+                    <label>Step Image</label>
+                </div>
+                <div class="form-group col-md-1 mb-0"></div>
+            </div>
+        </div>
+        <div class="card-body bg-light pt-0">
+            <ol class="sortable controls-step">
+                {STEPS}
+                <li class="entry-step">
+                    <div class="form-row border rounded bg-white pt-3 mb-4 shadow">
+                        <div class="form-group col-md-7">
+                            <textarea name="step_content[]" rows="3" class="step_content form-control"></textarea>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input name="step_image[]" type="file" class="form-control-file" style="border: none;"
+                                   accept="image/*">
+                        </div>
+                        <div class="form-group col-md-1 align-self-center">
+                            <button class="add-step btn btn-secondary pull-right mt-3" type="button"><span
+                                    class="fa fa-plus"></span></button>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">
+            <h5>Ingredients Assembly |
+                <small>Click <span class="fa fa-plus"></span> on the right to add another ingredient. Click <span
+                        class="fa fa-minus"></span> to remove.
+                </small>
+            </h5>
+        </div>
+        <div class="card-header text-center">
+            <a href="#" class="btn btn-info" data-toggle="modal" data-target="#create-ingredient">Create Ingredient</a>
+        </div>
+        <div class="card-body bg-light pb-0">
+            <div class="form-row">
+                <div class="form-group col-md-4 mb-0">
+                    <label>Ingredient</label>
+                </div>
+                <div class="form-group col-md-1 mb-0">
+                    <label>Quantity</label>
+                </div>
+                <div class="form-group col-md-2 mb-0">
+                    <label>Unit</label>
+                </div>
+                <div class="form-group col-md-5 mb-0">
+                    <label>Comment</label>
+                </div>
+                <div class="form-group col-md-1 mb-0"></div>
+            </div>
+        </div>
+        <div class="controls-ing card-body bg-light pt-0">
+            <div>
+                {INGREDIENTS}
+                <div class="entry-ing form-row">
+                    <div class="form-group col-md-4">
+                        <input type="text" class="ac-ing form-control" placeholder="Start typing to find items">
+                        <input name="ingredient_id[]" type="hidden" class="ing_hidden">
+                    </div>
+                    <div class="form-group col-md-1">
+                        <input name="quantity[]" type="number" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <select name="ingredient_unit[]" class="custom-select">
+                            <option></option>
+                            {NEW_UNITS_OPTIONS}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <div class="input-group">
+                            <input name="comment[]" type="text" class="form-control">
+                            <div class="input-group-append">
+                                <span class="add-ing input-group-text"><span class="fa fa-plus"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">
+            <h5>Recipes |
+                <small>Click <span class="fa fa-plus"></span> on the right to add another Recipe. Click <span
+                        class="fa fa-minus"></span> to remove.
+                </small>
+            </h5>
+        </div>
+        <div class="card-body bg-light pb-0">
+            <div class="form-row">
+                <div class="form-group col-md-6 mb-0">
+                    <label>Recipe</label>
+                </div>
+                <div class="form-group col-md-6 mb-0">
+                    <label>Recipe Option</label>
+                </div>
+                <div class="form-group col-md-1 mb-0"></div>
+            </div>
+        </div>
+        <div class="controls-rec card-body bg-light pt-0">
+            <div>
+                {RECIPES}
+                <div class="entry-rec form-row">
+                    <div class="form-group col-md-6">
+                        <input type="text" class="ac-rec form-control" placeholder="Start typing to find items">
+                        <input name="recipe_id[]" type="hidden" class="rec_hidden">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="input-group">
+                            <input name="recipe_option[]" type="text" class="form-control">
+                            <div class="input-group-append">
+                                <span class="add-rec plus-cursor input-group-text"><span
+                                        class="fa fa-plus"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="card mb-3">
+                <div class="card-header bg-secondary text-white"><h5>Approval</h5></div>
+                <div class="controls-eq card-body bg-light">
+                    <div class="custom-control custom-checkbox mr-sm-2">
+                        <input name="approved" type="checkbox" class="custom-control-input" value="on" id="approved"
+                               {APPROVED_CHECKED}>
+                        <label class="custom-control-label" for="approved">Approved</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center mb-5 mt-3">
+        <div class="col-auto">
+            <a href="/dish/{DISH_ID}f"><button class="btn btn-secondary mr-2" type="button">Cancel</button></a>
+            <button class="btn btn-primary ml-2" type="submit">Update Dish</button>
+        </div>
+    </div>
+</form>

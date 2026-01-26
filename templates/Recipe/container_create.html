@@ -1,0 +1,508 @@
+<div class="container-loader">
+    <div class="loader"></div>
+</div>
+
+<div class="modal fade" id="step-img-select" tabindex="-1" role="dialog" aria-labelledby="ModalSelect" aria-hidden="true">
+    <div class="modal-dialog modal-xl row align-items-center">
+        <div class="col modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalSelect">Select Images for Step</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="FormStepImages">
+                <div class="row" id="StepImgList"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button id="SelectStepImages" type="button" class="btn btn-primary btn-ok">Save Selection</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="create-ingredient" tabindex="-1" role="dialog" aria-labelledby="ModalCreateIngredient" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="col modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalCreateIngredient">Create New Ingredient</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="CreateIngredientForm" action="/ingredient/manage/" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input name="new_ingredient" id="Ingredient" class="form-control" type="text" placeholder="Ingredient Name *">
+                    </div>
+                    <div class="controlsnew-dr form-group">
+                        <label>Dietary Restrictions</label>
+                        <div>
+                            <div class="entrynew-dr input-group mb-3">
+                                <select name="new_dietary_restriction_id[]" class="form-control">
+                                    <option value=""></option>
+                                    {RESTRICTION_OPTIONS}
+                                </select>
+                                <div class="input-group-append">
+                                    <span class="addnew-dr plus-cursor input-group-text"><span class="fa fa-plus"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input name="new_alt_search_terms" id="AltNames" class="form-control" type="text" placeholder="Alternate Names">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="new_description" placeholder="Description" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="IngredientImage">Image</label>
+                        <input name="new_ingredient_image" type="file" class="form-control-file" style="border: none;" id="IngredientImage">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button id="ButtonCreateIngredient" type="submit" class="btn btn-primary btn-ok">Create Ingredient</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="my-3">{PAGE_TITLE}</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        {CONTENT}
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        unitSelect();
+        setQtyUnit();
+        var selectIndex = 0;
+
+        $(document).on('click', '.add-ing', function () {
+            var controlDiv = $('.controls-ing div:first'),
+                    currentEntry = $(this).parents('.entry-ing:first'),
+                    newEntry = $(currentEntry.clone()).appendTo(controlDiv);
+
+            newEntry.find('input').val('').attr('uuid', '');
+            newEntry.find('label').hide();
+            newEntry.find('input').removeClass('is-invalid is-valid');
+            controlDiv.find('.entry-ing:not(:last) .add-ing')
+                    .removeClass('add-ing').addClass('delete-ing')
+                    .html('<span class="fa fa-minus"></span>');
+        }).on('click', '.delete-ing', function () {
+            let ingItem = $(this).parents('.entry-ing:first').find('input.ing_hidden');
+            let optionValue =  ingItem.attr('uuid');
+            // let optionValueInt = parseInt(optionValue.replace(/[^\d.]/g, ''));
+            let optionUniqueId = ingItem.attr('uuid');
+            $(this).parents('.entry-ing:first').remove();
+            $('.controls-ing div:first .entry-ing:first').find('label').show();
+            $('.step_ingredient_' + optionUniqueId).remove();
+            $('.step_ings_hidden').each(function () {
+                let i = $(this).val();
+                i = i.replace(optionValue, '');
+                $(this).val(cleanCSV(i));
+            });
+            return false;
+        });
+
+        $(document).on('click', '.add-step', function () {
+            var newIndex = ++selectIndex;
+            var controlDiv = $('.controls-step'),
+                    currentEntry = $(this).parents('.entry-step:first'),
+                    newEntry = $(currentEntry.clone()).appendTo(controlDiv);
+
+            newEntry.find('textarea, input[type="file"]').val('');
+
+            newEntry.find('label').attr('for', function(index, currentvalue){return currentvalue + newIndex});
+            newEntry.find('input[type="checkbox"]').prop('checked', false).attr('id', function(index, currentvalue){return currentvalue + newIndex});
+            newEntry.find('input[name^="ingredient_array"]').val('');
+
+            newEntry.find('input[name^="images_step_filenames"]').attr('class', 'new-' + newIndex);
+            newEntry.find('a').attr('data-step-id', 'new-' + newIndex);
+            controlDiv.find('.entry-step:not(:last) .add-step')
+                    .removeClass('add-step').addClass('delete-step')
+                    .html('<span class="fa fa-minus"></span>');
+        }).on('click', '.delete-step', function () {
+            $(this).parents('.entry-step:first').remove();
+            $('.controls-step li:first .entry-step:first').find('label').show();
+            return false;
+        });
+
+        $(document).on('click', '.add-eq', function () {
+            var controlDiv = $('.controls-eq div:first'),
+                    currentEntry = $(this).parents('.entry-eq:first'),
+                    newEntry = $(currentEntry.clone()).appendTo(controlDiv);
+
+            newEntry.find('input').val('');
+            newEntry.find('label').hide();
+            controlDiv.find('.entry-eq:not(:last) .add-eq')
+                    .removeClass('add-eq').addClass('delete-eq')
+                    .html('<span class="fa fa-minus"></span>');
+        }).on('click', '.delete-eq', function () {
+            $(this).parents('.entry-eq:first').remove();
+            $('.controls-eq div:first .entry-eq:first').find('label').show();
+            return false;
+        });
+
+        $(document).on('click', '.add-cat', function () {
+            var controlDiv = $('.controls-cat div:first'),
+                    currentEntry = $(this).parents('.entry-cat:first'),
+                    newEntry = $(currentEntry.clone()).appendTo(controlDiv);
+
+            newEntry.find('input').val('');
+            controlDiv.find('.entry-cat:not(:last) .add-cat')
+                    .removeClass('add-cat').addClass('delete-cat')
+                    .html('<span class="fa fa-minus"></span>');
+        }).on('click', '.delete-cat', function () {
+            $(this).parents('.entry-cat:first').remove();
+            return false;
+        });
+
+        $(document).on('click', '.add-yield', function () {
+            var controlDiv = $('.controls-yield div:first'),
+                currentEntry = $(this).parents('.entry-yield:first'),
+                newEntry = $(currentEntry.clone()).appendTo(controlDiv);
+
+            newEntry.find('input').val('');
+            newEntry.find('label').hide();
+            newEntry.find('.yield-unit-options').attr('disabled', true).val('');
+            unitSelect();
+            controlDiv.find('.entry-yield:not(:last) .add-yield')
+                .removeClass('add-yield').addClass('delete-yield')
+                .html('<span class="fa fa-minus"></span>');
+        }).on('click', '.delete-yield', function () {
+            $(this).parents('.entry-yield:first').remove();
+            $('.controls-yield div:first .entry-yield:first').find('label').show();
+            return false;
+        });
+
+        $(document).on('click', '.addnew-dr', function () {
+            var controlDiv = $('.controlsnew-dr div:first'),
+                currentEntry = $(this).parents('.entrynew-dr:first'),
+                newEntry = $(currentEntry.clone()).appendTo(controlDiv);
+
+            newEntry.find('select').val('');
+            controlDiv.find('.entrynew-dr:not(:last) .addnew-dr')
+                .removeClass('addnew-dr').addClass('deletenew-dr')
+                .html('<span class="fa fa-minus"></span>');
+        }).on('click', '.deletenew-dr', function () {
+            $(this).parents('.entrynew-dr:first').remove();
+            return false;
+        });
+
+        function unitSelect () {
+            $('.yield-type-options').on('change', function () {
+                var o = $(this);
+
+                $.post('/recipe/', { yield_type: o.val() }).done(function(data) {
+                    o.parents('.entry-yield').find('.yield-unit-options').append('<option></option>').html(data).attr('disabled', false);
+                });
+            });
+        }
+
+        $('.clockpicker').clockpicker({
+            autoclose: true
+        }).find('input').change(function () {
+            var time1 = $('#prepare_time').val() || '00:00';
+            var time2 = $('#cooking_time').val() || '00:00';
+
+            var splitTime1 = time1.split(':');
+            var splitTime2 = time2.split(':');
+
+            if (!splitTime1[1]) {
+                splitTime1 = [time1, 0];
+            }
+
+            if (!splitTime2[1]) {
+                splitTime2 = [time2, 0];
+            }
+
+            var hour = parseInt(splitTime1[0]) + parseInt(splitTime2[0]);
+            var minute = parseInt(splitTime1[1]) + parseInt(splitTime2[1]);
+            hour = hour + minute / 60;
+            minute = minute % 60;
+
+            if (!hour) {
+                hour = '00';
+            }
+
+            if (!minute) {
+                minute = '00';
+            }
+
+            $('#time_to_prepare').val((hour < 10 && hour !== '00' ? '0' : '') + Math.floor(hour) + ':' + (minute < 10 && minute !== '00' ? '0' : '') + minute);
+        });
+
+        var validateIngredient = function(e, item, content) {
+            // console.log(item);
+            if ((content.length === 0 && item === null) && e.val() != '') {
+                e.removeClass('is-valid').addClass('is-invalid');
+            } else if (e.val() != '') {
+                e.removeClass('is-invalid').addClass('is-valid');
+            } else if (e.val() == '') {
+                e.removeClass('is-invalid is-valid');
+            }
+        };
+
+        var options = {
+            source: "/recipe/ac_ing_rec/",
+            minLength: 2,
+            response: function (event, ui) {
+                validateIngredient($(this), null, ui.content);
+            },
+            change: function(event, ui) {
+                validateIngredient($(this), ui.item, '');
+            },
+            select: function (event, ui) {
+                validateIngredient($(this), ui.item, '');
+                const r = ui.item.value.substring(0, 7) === 'RECIPE:' ? 'r' : '';
+                const uuid = create_UUID();
+                const currentId = $(this).parent('div').find('input[name="ingredient[]"]').attr('uuid');
+                $('.step_ingredient_' + currentId).remove();
+
+                $('.step-ingredients').each(function (index) {
+                    $(this).append(
+                        '<div class="custom-control custom-switch step_ingredient_'
+                        + uuid + '"><input type="checkbox" class="step-ingredient custom-control-input" uuid="'
+                        + uuid + '" id="' + uuid + '-' + index + '" value="'
+                        + r + ui.item.id + '"><label class="custom-control-label" uuid="'
+                        + uuid + '" for="' + uuid + '-' + index + '">'
+                        + ui.item.value + ' &bull; <span class="show-qty"></span> <span class="show-unit"></span></label></div>'
+                    );
+                });
+
+                $(this).closest('div').find('input.ing_hidden').attr('uuid', uuid).val(r + ui.item.id + '|' + uuid);
+                $(this).parent('div').next('div').find('input[name="quantity[]"]').attr('qty-id', uuid);
+                $(this).parent('div').nextAll('div').find('select[name="ingredient_unit[]"]').attr('unit-id', uuid);
+
+                let lbl = $('label[uuid="' + uuid + '"]');
+                lbl.find('.show-qty').text($('input[qty-id="' + uuid + '"]').val())
+                lbl.find('.show-unit').text($('select[unit-id="' + uuid + '"]').find('option:selected').attr('short-name'));
+                setQtyUnit();
+            }
+        };
+
+        var selector = '.ac-ing-rec';
+
+        $(document).on('keydown.autocomplete', selector, function () {
+            $(this).autocomplete(options);
+        });
+
+        var selectorStep = '.step-ingredient';
+
+        $(document).on('change', selectorStep, function() {
+            let hidden = $(this).parents(':eq(1)').find('input.step_ings_hidden');
+            let i = hidden.val();
+            let v = $(this).attr('uuid');
+
+            if (this.checked) {
+                i += ',' + v;
+            } else {
+                i = i.replace(v, '');
+            }
+
+            hidden.val(cleanCSV(i));
+        });
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+        }
+
+        function setQtyUnit() {
+            $('input[name="quantity[]"]').on('change', function () {
+                let id = $(this).attr('qty-id');
+                $('label[uuid="' + id + '"]').find('.show-qty').text($(this).val());
+            });
+
+            $('select[name="ingredient_unit[]"]').on('change', function () {
+                let id = $(this).attr('unit-id');
+                $('label[uuid="' + id + '"]').find('.show-unit').text($(this).find('option:selected').attr('short-name'));
+            });
+        }
+
+        function create_UUID() {
+            var dt = new Date().getTime();
+            var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = (dt + Math.random() * 16) % 16 | 0;
+                dt = Math.floor(dt/16);
+                return (c == 'x' ? r :(r&0x3|0x8)).toString(16);
+            });
+            return uuid;
+        }
+
+
+        function cleanCSV(value) {
+            return (value || '').split(',').filter(Boolean).filter(function(item, index, all) {
+                return (index === all.indexOf(item));
+            });
+        }
+
+        jQuery.validator.addMethod('validIngredient', function(value, element) {
+            return ! $(element).hasClass('is-invalid');
+        }, 'Please select a valid ingredient');
+
+        $("#createRecipeForm").validate({
+            invalidHandler: function(event, validator) {
+                var errors = validator.numberOfInvalids();
+                if (errors) {
+                    $('.container-loader').hide();
+                }
+            },
+            rules: {
+                recipe_title: {
+                    required: true
+                },
+                // category_name: {
+                //     required: true
+                // },
+                description: {
+                    required: true
+                },
+                source_link: {
+                    url: true
+                },
+                "yield_unit[]": {
+                    number: true
+                },
+                "eq_quantity[]": {
+                    number: true
+                },
+                selected_ingrdient: {
+                    validIngredient: true
+                }
+            },
+            messages: {
+                recipe_title: {
+                    required: "Please provide Recipe Title"
+                },
+                // category_name: {
+                //     required: "Please select category"
+                // },
+                description: {
+                    required: "Please provide Description"
+                }
+            }
+        });
+
+        $("#CreateIngredientForm").validate({
+            rules: {
+                new_ingredient: {
+                    required: true
+                }
+            },
+            messages: {
+                new_ingredient: {
+                    required: "Please provide Ingredient Name"
+                }
+            }
+        });
+
+        var optionsCategory = {
+            source: "/categories/src/",
+            minLength: 2,
+            select: function (event, ui) {
+                $(this).closest('div').find('input.cat_hidden').val(ui.item.id);
+            }
+        };
+
+        var selectorCategory = '.ac-cat';
+
+        $(document).on('keydown.autocomplete', selectorCategory, function () {
+            $(this).autocomplete(optionsCategory);
+        });
+
+        $('.sortable').sortable();
+
+        var calcTime = function () {
+            var ph = $('#prepareHours').val() || 0;
+            var pm = $('#prepareMin').val() || 0;
+            var ch = $('#cookHours').val() || 0;
+            var cm = $('#cookMin').val() || 0;
+
+            $('#time_to_prepare').val((parseInt(ph) + parseInt(ch)) + ' : ' + (parseInt(pm) + parseInt(cm)));
+        };
+
+        calcTime();
+        $('.time-selector').on('input', calcTime);
+
+        $('#step_image_id').change(function() {
+            $('.container-loader').show();
+            $('#createRecipeForm').append($('<input>').attr('type', 'hidden').attr('name', 'still').val(1));
+            $('#createRecipeForm').submit();
+        });
+
+        $('#step-img-select').on('show.bs.modal', function(e) {
+            var data = $(e.relatedTarget).data();
+            $('.btn-ok', this).data('stepId', data.stepId);
+            $.post('/recipe/', {get_step_images: 1, recipe_id: {RECIPEID}, recipe_step_id: data.stepId}).done(function(data) {
+                $('#StepImgList').html(data);
+            });
+        });
+
+        $('#step-img-select').on('click', '.btn-ok', function (e) {
+            var fileNames = '';
+
+            $('#FormStepImages input[name^=step_image]').each(function() {
+                if ($(this).prop('checked') == true) {
+                    fileNames += $(this).val() + ',';
+                }
+            });
+
+            $('input[class=' + $(this).data('stepId') + ']').val(fileNames.replace(/^,|,$/g,''));
+            $(e.delegateTarget).modal('hide');
+        });
+
+        $('#createRecipeForm').on('submit', function(f) {
+            $('.form-control-file').each(function() {
+                if (parseInt(this.files.length) > 6) {
+                    f.preventDefault();
+                    $('.container-loader').hide();
+                    alert('You can only upload a maximum of 6 files');
+                    return false;
+                }
+            });
+        });
+
+        $('#CreateIngredientForm').submit(function(e) {
+            e.preventDefault();
+
+            if (!$(this).valid()) {
+                return false;
+            }
+
+            $('#ButtonCreateIngredient').attr('disabled', true);
+            let formData = new FormData(this);
+            $(this)[0].reset();
+
+            $.ajax({
+                type: 'post',
+                url: '/ingredient/manage/',
+                data: formData,
+                success: function(r) {
+                    console.log(r);
+                    $('#create-ingredient').modal('hide');
+                    $('#ButtonCreateIngredient').attr('disabled', false);
+                    notif.Promo('top', 'center', '<span>Ingredient saved</span>', 'success');
+                },
+                error: function() {
+                    alert('Error occured: Ingresient has not been saved');
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+    });
+</script>

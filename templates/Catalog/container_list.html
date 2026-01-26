@@ -1,0 +1,284 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mt-4 mb-2">{PAGE_TITLE}</h1>
+    </div>
+</div>
+
+<hr>
+
+<div class="card">
+    <div class="card-header bg-secondary text-white"><h5 class="mb-0"><i class="fa fa-filter"></i> Filters</h5></div>
+    <div class="card-body p-2">
+        <table class="table table-responsive-sm table-sm table-bordered text-center mb-0">
+            <tbody>
+            <tr class="bg-light">
+                <td>Dishes</td>
+                <td>Recipes</td>
+                <td>Source</td>
+                <td colspan="3" class="border-top-0 border-bottom-0 border-primary">Date Range</td>
+                <td colspan="4">Sort</td>
+            </tr>
+            <tr>
+                <td rowspan="2" class="align-middle">
+                    <div class="custom-control custom-checkbox">
+                        <input name="dishes" {DISHES_CHECKED} type="checkbox" class="custom-control-input" value="on" id="Dishes">
+                        <label class="custom-control-label" for="Dishes"></label>
+                    </div>
+                </td>
+                <td rowspan="2" class="align-middle">
+                    <div class="custom-control custom-checkbox">
+                        <input name="recipes" {RECIPES_CHECKED} type="checkbox" class="custom-control-input" value="on" id="Recipes">
+                        <label class="custom-control-label" for="Recipes"></label>
+                    </div>
+                </td>
+                <td rowspan="2" class="align-middle">
+                    <input name="source" value="" type="text" class="form-control" id="Source">
+                </td>
+                <td>
+                    <div class="custom-control custom-radio">
+                        <input name="range_date" type="radio" class="custom-control-input" value="added" id="RangeDateAdded">
+                        <label class="custom-control-label" for="RangeDateAdded">Date Added</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="custom-control custom-radio">
+                        <input name="range_date" type="radio" class="custom-control-input" value="modified" id="RangeDateModified">
+                        <label class="custom-control-label" for="RangeDateModified">Date Modified</label>
+                    </div>
+                </td>
+                <td class="border-top-0 border-bottom-0 border-primary">
+                    <div class="custom-control custom-radio">
+                        <input name="range_date" type="radio" class="custom-control-input" value="dish" id="RangeDishDate">
+                        <label class="custom-control-label" for="RangeDishDate">Dish Date</label>
+                    </div>
+                </td>
+                <td class="bg-light">A &ndash; Z</td>
+                <td class="bg-light">Date Added</td>
+                <td class="bg-light">Date Modified</td>
+                <td class="bg-light">Dish Date</td>
+            </tr>
+            <tr>
+                <td colspan="3" class="align-middle border-top-0 border-bottom-0 border-primary">
+                    <div class="row">
+                        <div class="col-6">
+                            <input name="range_from" value="" type="date" class="form-control" id="RangeFrom">
+                        </div>
+                        <div class="col-6">
+                            <input name="range_to" value="" type="date" class="form-control" id="RangeTo">
+                        </div>
+                    </div>
+                </td>
+                <td id="SortAZ" class="plus-cursor align-middle"><i class="fa fa-sort"></i></td>
+                <td id="SortDateAdded" class="plus-cursor align-middle"><i class="fa fa-sort"></i></td>
+                <td id="SortDateModified" class="plus-cursor align-middle"><i class="fa fa-sort"></i></td>
+                <td id="SortDishDate" class="plus-cursor align-middle"><i class="fa fa-sort"></i></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<h4 class="mt-5">Dishes</h4>
+{LISTING_DISHES}
+
+<h4 class="mt-5">Recipes</h4>
+{LISTING_RECIPES}
+
+<div class="row justify-content-center">
+    <div class="col-auto mb-5">
+        {PAGINATOR}
+    </div>
+</div>
+
+<div class="row">
+    <!--
+    <div class="col-md-3 mb-5">
+        <div class="card mb-4">
+            <h5 class="card-header">Search</h5>
+            <div class="card-body">
+                <form action="/catalog/" method="get" id="srcForm">
+                    <div class="form-row align-items-center">
+                        <div class="col-sm-6 pl-0">
+                            <div class="custom-control custom-checkbox">
+                                <input name="whole_word" type="checkbox" class="custom-control-input" value="on"
+                                       id="wholeWrd" {WHOLE_WORD_CHECKED}>
+                                <label class="custom-control-label" for="wholeWrd">Whole word</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 pr-0">
+                            <div class="custom-control custom-checkbox">
+                                <input name="my_items" type="checkbox" class="custom-control-input" value="on"
+                                       id="myItems" {MY_ITEMS_CHECKED}>
+                                <label class="custom-control-label" for="myItems">My items</label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-row align-items-center">
+                        <div class="input-group">
+                            <input id="srcInput" name="q" value="{QUERY}" placeholder="Title, Description, Author"
+                                   type="text" class="form-control">
+                            <button type="submit" class="btn btn-primary">Go</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-row align-items-center">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="isIngredient" name="is_ingredient" value="yes"
+                                   {IS_INGREDIENT_YES_CHECKED} class="custom-control-input">
+                            <label class="custom-control-label" for="isIngredient">Contains Ingredient:</label>
+                        </div>
+                        <div class="custom-control custom-radio mb-2">
+                            <input type="radio" id="noIngedient" name="is_ingredient" value="no"
+                                   {IS_INGREDIENT_NO_CHECKED} class="custom-control-input">
+                            <label class="custom-control-label" for="noIngedient">Doesn't contain Ingredient:</label>
+                        </div>
+                        <div class="input-group">
+                            <input id="ingInput" name="q_ingredient" value="{QUERY_INGREDIENT}" placeholder="Ingredient"
+                                   type="text" class="form-control">
+                            <button type="submit" class="btn btn-primary">Go</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card my-4">
+            <h5 class="card-header">Select Category</h5>
+            <div class="card-body">
+                <form action="/catalog/" method="get" onsubmit="return false;">
+                    <div class="form-row align-items-center">
+                        <input id="catInput" name="c" value="{CATEGORY_NAME}" type="text" class="form-control">
+                    </div>
+                    <small>Type in a cateory name</small>
+                </form>
+            </div>
+        </div>
+
+        <div class="card my-4">
+            <h5 class="card-header">Recently Added</h5>
+            <div class="card-body">
+                <form id="recentrlyForm" action="/catalog/" method="get">
+                    <label for="rangeSlider">Select days range:</label>
+                    <input name="days" min="1" max="10" value="{DAYS_RANGE}" type="range" class="custom-range"
+                           id="rangeSlider" style="border:0;">
+                    <p class="mt-2">Last&nbsp;<span id="daysRange" class="text-light bg-dark p-1 lead font-weight-bold"></span>&nbsp;days
+                    </p>
+                    <div class="row align-items-center justify-content-center mt-3">
+                        <button type="submit" class="btn btn-primary">Display</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    -->
+</div>
+
+<script>
+    {NOTIFICATION}
+
+    $(function () {
+        $("#srcInput").autocomplete({
+            source: function (request, response) {
+                $.getJSON("/catalog/src/", {
+                    term: request.term,
+                    whole_word: ($('#wholeWrd').is(':checked') ? 'on' : null),
+                    my_items: ($('#myItems').is(':checked') ? 'on' : null)
+                },
+                response);
+            },
+            minLength: 2,
+            select: function (event, ui) {
+                var product = parseInt(ui.item.recipe_id) ? 'recipe' : 'dish';
+                window.location.assign("/" + product + "/" + ui.item.id);
+            }
+        });
+
+        $("#ingInput").autocomplete({
+            source: function (request, response) {
+                $.getJSON("/catalog/ing/", {
+                    term: request.term,
+                    whole_word: ($('#wholeWrd').is(':checked') ? 'on' : null),
+                    is_ingredient: ($('#noIngedient').is(':checked') ? 'no' : 'yes'),
+                    my_items: ($('#myItems').is(':checked') ? 'on' : null)
+                },
+                response);
+            },
+            minLength: 2,
+            select: function (event, ui) {
+                var product = parseInt(ui.item.recipe_id) ? 'recipe' : 'dish';
+                window.location.assign("/" + product + "/" + ui.item.id);
+            }
+        });
+
+        $("#catInput").autocomplete({
+            source: "/categories/src/",
+            minLength: 2,
+            select: function (event, ui) {
+                window.location.assign("/catalog/?c=" + ui.item.id + "&category=" + ui.item.value + "&my_items=" + ($('#myItems').is(':checked') ? 'on' : ''));
+            }
+        });
+
+        $('[data-toggle="popover"]').popover({
+            trigger: 'hover',
+            placement: 'auto'
+        });
+    });
+
+    $('#myItems').on('click', function() {
+        if ($(this).is(':checked') && !$('#srcInput').val() && !$('#ingInput').val()) {
+            window.location.assign("/catalog/?my_items=on");
+        } else if (!$(this).is(':checked')) {
+            window.location.assign("/catalog/");
+        }
+    });
+
+    $('#recentrlyForm').on('submit', function() {
+        var myItems = $('#myItems').is(':checked') ? 'on' : null;
+        $(this).append("<input type='hidden' name='my_items' value='" + myItems + "' />");
+        return true;
+    });
+
+    $('#srcInput, #catInput, #ingInput').focus(function () {
+        var selector = $('form :input[type=text]');
+        selector.removeClass('bg-warning');
+        selector.val('');
+    });
+
+    $(document).ready(function () {
+        srcBkg($('#srcInput'));
+        srcBkg($('#catInput'));
+        srcBkg($('#ingInput'));
+
+        function srcBkg(s) {
+            if ($(s).val() !== '') {
+                $(s).addClass('bg-warning');
+            } else {
+                $(s).removeClass('bg-warning');
+            }
+        }
+
+        $('#daysRange').html($('#rangeSlider').val());
+
+        if (GetURLParameter('days')) {
+            $('#daysRange').removeClass('text-light bg-dark').addClass('bg-warning');
+        }
+    });
+
+    $('#rangeSlider').on('input', function () {
+        $('#daysRange').html($(this).val());
+    });
+
+    function GetURLParameter(sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+
+        for (var i = 0; i < sURLVariables.length; i++) {
+            var sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] == sParam) {
+                return sParameterName[1];
+            }
+        }
+    }
+</script>

@@ -1,0 +1,306 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="my-3">{PAGE_TITLE}</h2>
+    </div>
+</div>
+
+<div class="card mb-5">
+    <div class="card-header bg-secondary text-white"><h5 class="mb-0"><i class="fa fa-filter"></i> Filters</h5></div>
+    <div class="card-body pt-2 px-2 pb-0">
+        <div class="row">
+            <div class="col-sm-2 align-items-stretch mb-3">
+                <table class="table table-sm table-bordered text-center mb-0 h-100 w-100">
+                    <tbody>
+                    <tr class="bg-light">
+                        <td class="align-middle">Source</td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle">
+                            <input name="source" value="{FILTER_SOURCE}" type="text" class="form-control" id="Source">
+                        </td>
+                    </tr>
+                    <tr class="bg-light">
+                        <td class="align-middle">Author</td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle">
+                            <input name="author" value="{FILTER_AUTHOR}" type="text" class="form-control" id="Author">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm align-items-stretch mb-3">
+                <form id="DateRangeForm" action="" method="get">
+                    <table class="table table-sm table-bordered text-center mb-0 h-100 w-100">
+                        <tbody>
+                        <tr class="bg-light">
+                            <td colspan="2" class="align-middle">Date Range</td>
+                        </tr>
+                        <tr>
+                            <td class="align-middle">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="custom-control custom-radio">
+                                            <input {RANGE_DATE_ADDED_CHECKED} name="range_date" type="radio" class="custom-control-input" value="added" id="RangeDateAdded">
+                                            <label class="custom-control-label" for="RangeDateAdded">Date Added</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="custom-control custom-radio">
+                                            <input {RANGE_DATE_MODIFIED_CHECKED} name="range_date" type="radio" class="custom-control-input" value="modified" id="RangeDateModified">
+                                            <label class="custom-control-label" for="RangeDateModified">Date Modified</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="custom-control custom-radio">
+                                            <input {RANGE_DISH_DATE_CHECKED} name="range_date" type="radio" class="custom-control-input" value="dish" id="RangeDishDate">
+                                            <label class="custom-control-label" for="RangeDishDate">Dish Date</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-middle">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input id="RangeFrom" name="range_from" value="{RANGE_FROM}" type="date" class="form-control my-1" id="RangeFrom">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input id="RangeTo" name="range_to" value="{RANGE_TO}" type="date" class="form-control my-1" id="RangeTo">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-middle">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <button id="DateRangeReset" type="link"class="btn btn-secondary btn-sm my-1">Reset</button>
+                                    </div>
+                                    <div class="col-sm">
+                                        <button id="DateRangeApply" type="link"class="btn btn-primary btn-sm my-1">Apply</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="col-sm align-items-stretch mb-3">
+                <table class="table table-sm table-bordered text-center mb-0 h-100 w-100">
+                    <tbody>
+                    <tr class="bg-light">
+                        <td colspan="4" class="align-middle">Sort</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-light text-nowrap align-middle">A&nbsp;&ndash;&nbsp;Z</td>
+                        <td class="bg-light align-middle">Date Added</td>
+                        <td class="bg-light align-middle">Date Modified</td>
+                        <td class="bg-light align-middle">Dish Date</td>
+                    </tr>
+                    <tr>
+                        <td id="SortAZ" class="plus-cursor align-middle"><span class="h4 text-secondary">{SORT_AZ}</span></td>
+                        <td id="SortAdded" class="plus-cursor align-middle"><span class="h4 text-secondary">{SORT_ADDED}</span></td>
+                        <td id="SortModified" class="plus-cursor align-middle"><span class="h4 text-secondary">{SORT_MODIFIED}</span></td>
+                        <td id="SortDish" class="plus-cursor align-middle"><span class="h4 text-secondary">{SORT_DISH}</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-columns">
+    {CONTENT}
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-auto mb-5">
+        {PAGINATOR}
+    </div>
+</div>
+
+<script>
+    {NOTIFICATION}
+
+    $('[data-toggle="popover"]').popover({
+        trigger: 'hover',
+        placement: 'auto'
+    });
+
+    $("#Source").autocomplete({
+        source: "/dish/source/",
+        minLength: 2,
+        select: function (event, ui) {
+            refresh(null, null, ui.item.value);
+        }
+    });
+
+    $('#Source').keyup(function() {
+        if ($(this).val() === null || $(this).val() === '') {
+            refresh(null, null, '');
+        }
+    });
+
+    $("#Author").autocomplete({
+        source: "/dish/author/",
+        minLength: 2,
+        select: function (event, ui) {
+            refresh(ui.item.id, ui.item.value);
+        }
+    });
+
+    $('#Author').keyup(function() {
+        if ($(this).val() === null || $(this).val() === '') {
+            refresh('', '');
+        }
+    });
+
+    function refresh(authorId = null, author = null, source = null, sortAz = null, sortAdded = null, sortModified = null, sortDish = null) {
+        window.location.assign(
+            '/dish/'
+            + '?author_id=' + (authorId !== null ? authorId : GetURLParameter('author_id'))
+            + "&author=" + (author !== null ? author : GetURLParameter('author'))
+            + "&source=" + (source !== null ? source : GetURLParameter('source'))
+            + '&range_date=' + GetURLParameter('range_date')
+            + '&range_from=' + GetURLParameter('range_from')
+            + '&range_to=' + GetURLParameter('range_to')
+            + '&sort_az=' + (sortAz !== null ? sortAz : GetURLParameter('sort_az'))
+            + '&sort_added=' + (sortAdded !== null ? sortAdded : GetURLParameter('sort_added'))
+            + '&sort_modified=' + (sortModified !== null ? sortModified : GetURLParameter('sort_modified'))
+            + '&sort_dish_date=' + (sortDish !== null ? sortDish : GetURLParameter('sort_dish_date'))
+            + "&my_items=" + ($('#myItems').is(':checked') ? 'on' : ''));
+    }
+
+    $('#DateRangeApply').click(function(e) {
+        e.preventDefault();
+        submitRangeFrom();
+    });
+
+    $('#DateRangeReset').click(function(e) {
+        e.preventDefault();
+        $('#RangeFrom').val('');
+        $('#RangeTo').val('');
+        submitRangeFrom();
+    });
+
+    function submitRangeFrom() {
+        var form = $('#DateRangeForm');
+
+        form.append(
+            $('<input>').attr('type', 'hidden').attr('name', 'source').val(GetURLParameter('source')),
+            $('<input>').attr('type', 'hidden').attr('name', 'author').val(GetURLParameter('author')),
+            $('<input>').attr('type', 'hidden').attr('name', 'author_id').val(GetURLParameter('author_id')),
+            $('<input>').attr('type', 'hidden').attr('name', 'sort_az').val(GetURLParameter('sort_az')),
+            $('<input>').attr('type', 'hidden').attr('name', 'sort_added').val(GetURLParameter('sort_added')),
+            $('<input>').attr('type', 'hidden').attr('name', 'sort_modified').val(GetURLParameter('sort_modified')),
+            $('<input>').attr('type', 'hidden').attr('name', 'sort_dish_date').val(GetURLParameter('sort_dish_date'))
+        );
+
+        form.submit();
+    }
+
+    $('#SortAZ').click(function() {
+        var current = GetURLParameter('sort_az');
+
+        if (current === '' || current === null || current == 'desc') {
+            refresh(null, null, null, 'asc', '', '', '');
+        } else {
+            refresh(null, null, null, 'desc', '', '', '');
+        }
+    });
+
+    $('#SortAdded').click(function() {
+        var current = GetURLParameter('sort_added');
+
+        if (current === '' || current === null || current == 'desc') {
+            refresh(null, null, null, '', 'asc', '', '');
+        } else {
+            refresh(null, null, null, '', 'desc', '', '');
+        }
+    });
+
+    $('#SortModified').click(function() {
+        var current = GetURLParameter('sort_modified');
+
+        if (current === '' || current === null || current == 'desc') {
+            refresh(null, null, null, '', '', 'asc', '');
+        } else {
+            refresh(null, null, null, '', '', 'desc', '');
+        }
+    });
+
+    $('#SortDish').click(function() {
+        var current = GetURLParameter('sort_dish_date');
+
+        if (current === '' || current === null || current == 'desc') {
+            refresh(null, null, null, '', '', '', 'asc');
+        } else {
+            refresh(null, null, null, '', '', '', 'desc');
+        }
+    });
+
+    $('#myItems').on('click', function() {
+        if ($(this).is(':checked') && !$('#srcInput').val() && !$('#ingInput').val()) {
+            window.location.assign("/dish/?my_items=on");
+        } else if (!$(this).is(':checked')) {
+            window.location.assign("/dish/");
+        }
+    });
+
+    $('#recentlyForm').on('submit', function() {
+        var myItems = $('#myItems').is(':checked') ? 'on' : null;
+        $(this).append("<input type='hidden' name='my_items' value='" + myItems + "' />");
+        return true;
+    });
+
+    $('#srcInput, #catInput, #ingInput').focus(function () {
+        var selector = $('form :input[type=text]');
+        selector.removeClass('bg-light');
+        selector.val('');
+    });
+
+    $(document).ready(function () {
+        srcBkg($('#srcInput'));
+        srcBkg($('#catInput'));
+        srcBkg($('#ingInput'));
+
+        function srcBkg(s) {
+            if ($(s).val() !== '') {
+                $(s).addClass('bg-light');
+            } else {
+                $(s).removeClass('bg-light');
+            }
+        }
+
+        $('#daysRange').html($('#rangeSlider').val());
+
+        if (GetURLParameter('days')) {
+            console.log(GetURLParameter('days'));
+            $('#daysRange').removeClass('text-light bg-dark').addClass('bg-warning');
+        }
+    });
+
+    $('#rangeSlider').on('input', function () {
+        $('#daysRange').html($(this).val());
+    });
+
+    function GetURLParameter(sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+
+        for (var i = 0; i < sURLVariables.length; i++) {
+            var sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] == sParam) {
+                return decodeURIComponent(sParameterName[1].replace(/\+/g, ' '));
+            }
+        }
+
+        return '';
+    }
+</script>

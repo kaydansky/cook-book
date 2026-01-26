@@ -1,0 +1,20 @@
+<li class="entry-step">
+    <div class="form-row bg-stripped border rounded pt-3 mb-4 shadow">
+        <div class="form-group col-md-7">
+            <textarea name="step_content[]" rows="3" class="step_content form-control">{step_content}</textarea>
+        </div>
+        <div class="form-group col-md-4">
+            <div class="row m-0">
+                <input name="step_image[]" type="file" class="form-control-file" style="border: none;" accept="image/*">
+                <input type="hidden" name="step_image_current[]" value="{STEP_IMAGE_CURRENT}">
+            </div>
+            <div class="row">
+                {IMAGE}
+            </div>
+        </div>
+        <div class="form-group col-md-1 align-self-center">
+            <button class="delete-step btn btn-secondary pull-right mt-3" type="button"><span
+                    class="fa fa-minus"></span></button>
+        </div>
+    </div>
+</li>

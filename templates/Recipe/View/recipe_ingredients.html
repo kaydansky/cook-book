@@ -1,0 +1,31 @@
+<tr>
+    <td class="align-middle">
+        <div class="row align-items-center d-flex flex-nowrap">
+            <div class="col-sm-auto pr-1">
+                <input {DISABLED}
+                    type="{FIELD_TYPE}"
+                    step="0.5" 
+                    class="{FIELD_CLASS}form-control bg-light"
+                    value="{QUANTITY_VALUE}"
+                    original="{QUANTITY_VALUE}"
+                    scaled="{QUANTITY_VALUE}"
+                    converted="{QUANTITY_VALUE}"
+                    yieldunit="{UNIT}"
+                    yieldtype="{YIELD_TYPE}"
+                    yieldcode="{YIELD_CODE}"
+                    measurement="{MEASUREMENT_SYSTEM}"
+                    conversion="{CONVERSION}"
+                    conversionunit="{CONVERSION_UNIT}"
+                    count="{INGR_COUNT}"
+                    ingid="{INGREDIENT_ID}"
+                    style="width: 80px; border: 0 !important;"
+                    oninput="this.style.width = ((this.value.length + 8) * 10) + 'px';">
+            </div>
+            <div class="col-sm-auto pl-1">
+                {UNIT}
+            </div>
+        </div>
+    </td>
+    <td class="align-middle">{INGREDIENT_ITEM}</td>
+    <td class="align-middle">{COMMENT}</td>
+</tr>

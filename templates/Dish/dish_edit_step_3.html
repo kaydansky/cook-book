@@ -1,0 +1,84 @@
+<form action="/dish/manage/edit/{DISH_ID}" method="post" id="createDishForm">
+    <input type="hidden" name="image_filenames" value="{IMAGE_FILENAMES}">
+    <input type="hidden" name="wizard_step" value="3">
+    <input type="hidden" name="dish_title" value="{DISH_TITLE}">
+    <input type="hidden" name="dish_subtitle" value="{DISH_SUBTITLE}">
+    <input type="hidden" name="description" value="{DESCRIPTION}">
+    <input type="hidden" name="source" value="{SOURCE}">
+    <input type="hidden" name="source_link" value="{SOURCE_LINK}">
+    <input type="hidden" name="foh_kitchen_assembly" value="{FOH_KITCHEN_ASSEMBLY}">
+    <input type="hidden" name="foh_dining_assembly" value="{FOH_DINING_ASSEMBLY}">
+    <input type="hidden" name="foh_purveyors" value="{FOH_PURVEYORS}">
+    <input type="hidden" name="notes" value="{NOTES}">
+    <input name="this_china_id" value="{THIS_CHINA_ID}" type="hidden" class="china_hidden">
+    <input type="hidden" name="this_marking" value="{THIS_MARKING}">
+    <input type="hidden" name="this_wine_pairing" value="{THIS_WINE_PAIRING}">
+    <input type="hidden" name="dish_date" value="{DISH_DATE}">
+    <input type="hidden" name="approved" value="{APPROVED_HIDDEN}">
+
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white">
+            <h5>Ingredients Assembly |
+                <small>Click <span class="fa fa-plus"></span> on the right to add another ingredient. Click <span
+                        class="fa fa-minus"></span> to remove.
+                </small>
+            </h5>
+        </div>
+        <div class="card-header text-center">
+            <a href="#" class="btn btn-info" data-toggle="modal" data-target="#create-ingredient">Create Ingredient</a>
+        </div>
+        <div class="card-body bg-light pb-0">
+            <div class="form-row">
+                <div class="form-group col-md-4 mb-0">
+                    <label>Ingredient</label>
+                </div>
+                <div class="form-group col-md-1 mb-0">
+                    <label>Quantity</label>
+                </div>
+                <div class="form-group col-md-2 mb-0">
+                    <label>Unit</label>
+                </div>
+                <div class="form-group col-md-5 mb-0">
+                    <label>Comment</label>
+                </div>
+                <div class="form-group col-md-1 mb-0"></div>
+            </div>
+        </div>
+        <div class="controls-ing card-body bg-light pt-0">
+            <div>
+                {INGREDIENTS}
+                <div class="entry-ing form-row">
+                    <div class="form-group col-md-4">
+                        <input type="text" class="ac-ing form-control" placeholder="Start typing to find items">
+                        <input name="ingredient_id[]" type="hidden" class="ing_hidden">
+                    </div>
+                    <div class="form-group col-md-1">
+                        <input name="quantity[]" type="number" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <select name="ingredient_unit[]" class="custom-select">
+                            <option></option>
+                            {NEW_UNITS_OPTIONS}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <div class="input-group">
+                            <input name="comment[]" type="text" class="form-control">
+                            <div class="input-group-append">
+                                <span class="add-ing input-group-text"><span class="fa fa-plus"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center mb-5 mt-3">
+        <div class="col-auto">
+            <a href="/dish/{DISH_ID}"><button class="btn btn-secondary mx-2" type="button">Cancel</button></a>
+            <a href="/dish/manage/edit/{DISH_ID}/2"><button class="btn btn-primary mx-2" type="button"><i class="fa fa-arrow-left"></i> Back</button></a>
+            <button class="btn btn-primary mx-2" type="submit">Save &amp; Continue <i class="fa fa-arrow-right"></i></button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,90 @@
+<form action="/recipe/manage/new/" method="post" id="createRecipeForm" enctype="multipart/form-data">
+    <div class="card mb-3">
+        <div class="card-header bg-secondary text-white"><h5>General Information</h5></div>
+        <div class="card-body bg-light">
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label for="recipe_title">Recipe Title​</label>
+                    <input name="recipe_title" type="text" class="form-control" id="recipe_title">
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="alt_names">Alternative Names</label>
+                    <textarea name="alt_search_terms" class="form-control" id="alt_names" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label for="source">Source</label>
+                    <input name="source" type="text" class="form-control" id="source">
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="source">Source Link</label>
+                    <input name="source_link" type="text" class="form-control" id="source_link">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label for="description">Description</label>
+                    <textarea name="description" class="form-control" id="description" rows="3"></textarea>
+                </div>
+                <div class="form-group col-sm-2">
+                    <label>Preparation Time</label>
+                    <div class="row">
+                        <div class="col-sm-6 pr-2">
+                            <input name="prepare_hours" type="number" class="form-control time-selector withoutampm" id="prepareHours" placeholder="Hrs">
+                        </div>
+                        <div class="col-sm-6 pl-0 pr-4">
+                            <input name="prepare_min" type="number" class="form-control time-selector withoutampm" id="prepareMin" placeholder="Min">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-sm-2">
+                    <label>Cooking Time</label>
+                    <div class="row">
+                        <div class="col-sm-6 pr-2">
+                            <input name="cook_hours" type="number" class="form-control time-selector withoutampm" id="cookHours" placeholder="Hrs">
+                        </div>
+                        <div class="col-sm-6 pl-0 pr-4">
+                            <input name="cook_min" type="number" class="form-control time-selector withoutampm" id="cookMin" placeholder="Min">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-sm-2">
+                    <label for="time_to_prepare">Total Time</label>
+                    <input name="time_to_prepare" type="text" class="form-control" id="time_to_prepare" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <label for="notes">Notes</label>
+                    <textarea name="notes" id="notes" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="controls-cat form-group col-sm-6">
+                    <label>Categories</label>
+                    <div>
+                        <div class="entry-cat input-group mb-3">
+                            <input name="category_id[]" type="hidden" class="cat_hidden">
+                            <input name="category_name" type="text" class="ac-cat form-control">
+                            <div class="input-group-append">
+                                <span class="add-cat input-group-text"><span class="fa fa-plus"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm">
+                    <label>Presentation Images</label>
+                    <input name="image_id[]" id="image_id" type="file" class="form-control-file" style="border: none;" accept="image/*" multiple>
+                    <small class="form-text text-muted">Hold Ctrl button and click to select multiple files.</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center mb-5 mt-5">
+        <div class="col-auto">
+            <button class="btn btn-primary" type="submit">Save &amp; Continue <i class="fa fa-arrow-right"></i></button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,19 @@
+<div class="entry-eq form-row">
+    <div class="form-group col-md-4">
+        <select name="equipment_id[]" class="custom-select">
+            <option value=""></option>
+            {EQUIPMENT_OPTIONS}
+        </select>
+    </div>
+    <div class="form-group col-md-2">
+        <input name="eq_quantity[]" value="{QUANTITY}" type="number" class="form-control">
+    </div>
+    <div class="form-group col-md-6">
+        <div class="input-group">
+            <input name="eq_comment[]" value="{COMMENT}" type="text" class="form-control">
+            <div class="input-group-append">
+                <span class="delete-eq input-group-text"><span class="fa fa-minus"></span></span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+<form id="SearchForm" method="get" class="form-inline mt-2 mt-md-0 ml-auto">
+    <div class="input-group mr-sm-2">
+        <input id="srcInput" name="q" value="{QUERY}" class="form-control" type="search" placeholder="Search">
+        <span class="input-group-append">
+            <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
+        </span>
+        <span class="input-group-append">
+            <div class="dropdown">
+                <button id="btnFilters" class="btn btn-outline-info ml-sm-n1 dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" type="button"><i class="fa fa-sliders-h mx-1"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right keep-open bg-light shadow" style="min-width: 304px;">
+                    <li class="row m-0">
+                        <div class="col-sm-5 dropdown-item">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="Recipes" name="p" value="recipe" {RECIPE_CHECKED} class="custom-control-input">
+                                <label class="custom-control-label" for="Recipes">Recipes</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 dropdown-item">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="Dishes" name="p" value="dish" {DISH_CHECKED} class="custom-control-input">
+                                <label class="custom-control-label" for="Dishes">Dishes</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 dropdown-item">&nbsp;</div>
+                    </li>
+                    <div class="dropdown-divider"></div>
+                    <li class="row m-0 p-3 justify-content-center">
+                        <input type="search" name="q_ingredient" value="{QUERY_INGREDIENT}" placeholder="Ingredient" class="form-control">
+                    </li>
+                    <li class="row m-0">
+                        <div class="col-sm-5 dropdown-item">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="isIngredient" name="is_ingredient" value="yes" {IS_INGREDIENT_YES_CHECKED} class="custom-control-input">
+                                <label class="custom-control-label" for="isIngredient">Contains</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-7 dropdown-item">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="noIngedient" name="is_ingredient" value="no" {IS_INGREDIENT_NO_CHECKED} class="custom-control-input">
+                                <label class="custom-control-label" for="noIngedient">Doesn't contain</label>
+                            </div>
+                        </div>
+                    </li>
+                    <div class="dropdown-divider"></div>
+                    <li class="row m-0 p-0 justify-content-center">
+                        <div class="form-group badge-checkboxes overflow-auto">
+                            <div class="card-columns" style="max-width: 270px; height: 300px;">
+                                {CATEGORY_BADGES}
+                            </div>
+                        </div>
+                    </li>
+                </div>
+            </div>
+        </span>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function() {
+        if (window.location.pathname.indexOf('/dish/') >= 0 ) {
+            $('#Dishes').prop('checked', true);
+        }
+    });
+
+    $('.dropdown-menu.keep-open').on('click', function (e) {
+        e.stopPropagation();
+    });
+
+    if (1) {
+        $('body').attr('tabindex', '0');
+    } else {
+        alertify.confirm().set({'reverseButtons': true});
+        alertify.prompt().set({'reverseButtons': true});
+    }
+    
+    $('#SearchForm').on('submit', function () {
+        var url = $('#Dishes').is(':checked') ? '/dish/' : '/recipe/';
+        $(this).attr('action', url);
+    });
+
+    $("#srcInput").autocomplete({
+        source: function (request, response) {
+            var url = $('#Dishes').is(':checked') ? '/dish/' : '/recipe/';
+
+            $.getJSON(url + "src/", {
+                    term: request.term,
+                    whole_word: ($('#wholeWrd').is(':checked') ? 'on' : null),
+                    my_items: ($('#myItems').is(':checked') ? 'on' : null)
+                },
+                response);
+        },
+        minLength: 2,
+        select: function (event, ui) {
+            var url = $('#Dishes').is(':checked') ? '/dish/' : '/recipe/';
+            window.location.assign(url + ui.item.id);
+        }
+    });
+
+    $("#ingInput").autocomplete({
+        source: function (request, response) {
+            $.getJSON("ingredient/ac_ingredient/", {
+                    term: request.term,
+                    whole_word: ($('#wholeWrd').is(':checked') ? 'on' : null),
+                    is_ingredient: ($('#noIngedient').is(':checked') ? 'no' : 'yes'),
+                    my_items: ($('#myItems').is(':checked') ? 'on' : null)
+                },
+                response);
+        },
+        minLength: 2,
+        select: function (event, ui) {
+            var url = $('#Dishes').is(':checked') ? '/dish/' : '/recipe/';
+            window.location.assign(url + ui.item.id);
+        }
+    });
+</script>
