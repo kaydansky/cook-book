@@ -69,7 +69,3 @@ A web-based application for managing and exploring recipes, ingredients, dishes,
 ## License
 
 This project is licensed under the MIT License.
-
----
-
-*Happy cooking!*
